@@ -1,0 +1,252 @@
+<?php
+    include 'db.php';
+?>
+<html lang="it">
+    <head>
+        <title>MyCinema : ACCEDI</title>
+        <meta charset="utf-8">
+
+        <style>
+
+            body{
+                display: flex;   /*Visualizza l'elemento come un contenitore "flessibile" */
+                /*gli elementi della pagina sono disposti uno sotto l'altro (header, content e footer)*/
+                background-color: black;
+                justify-content: center;
+                padding: 100px;
+
+
+
+
+            }
+
+
+            .auth-container{
+                display: flex;             /*Visualizza l'elemento come un contenitore "flessibile" */
+                justify-content: center;  /*centra il div*/
+                align-items: center;      /*allinea gli elementi del div al centro*/
+                padding: 20px;
+                /*colore di sfondo: la funzione radial-gradient imposta un gradiente radiale come colore di sfondo; un 
+                gradiente radiale è un passaggio di colore che si sviluppa in modo circolare partendo da un punto centrale verso l'esterno:
+                  
+                    1) il valore "circle" definisce la forma (shape) del gradiente: in questo caso forza il gradiente ad avere una forma perfettamente circolare;
+                    2) il valore "center" definisce la posizione (position) del gradiente: in questo caso posiziona il punto di inizio esattamente al centro
+                      dell'elemento;
+                    3) i colori e le percentuali definiscono quali colori usare e dove devono trovarsi nel raggio del cerchio:
+                          - #1a1a1a 0%: è il colore di partenza (un grigio molto scuro); lo 0% indica che questo colore si trova esattamente
+                          nel punto centrale;
+                          - #000 100% : è il colore finale (nero) ; il 100% indica che il nero viene aggiunto al bordo esterno del 
+                          contenitore
+                    Le "interruzioni" (stops) di colore sono i colori tra cui si desidera ottenere transizioni fluide; questo valore è costituito
+                    da un valore di colore, seguito da una o due posizioni di interruzione opzionale (ovvero una percentuale compresa tra 0% e 100% o una lunghezza 
+                    lungo l'asse del gradiente).*/
+                background: radial-gradient(circle at center, #1a1a1a 0%, #000 100%); /*colore di sfondo*/
+    
+
+
+
+
+            }
+
+            .header{
+                text-align: center;
+                margin-bottom: 30px;
+            }
+
+            h1{
+                color: #ff9d00;
+            }
+
+            #header-par{
+                color: #666;
+                margin-top: 10px;
+
+
+            }
+
+
+
+            /*Box centrale per l'autenticazione*/
+            .auth-box{
+                background-color: #111;
+                padding: 80px;
+                width: 100%;
+                border: 1px solid #222;
+
+            }
+
+            /*Elementi del form*/
+            .input-group{
+                margin-bottom: 20px;
+                margin-right: 50px;
+
+            }
+            
+            input{
+                background-color: #222;
+                color: white;
+                border: 1px solid #333;
+                width: 100%;
+                padding: 20px;
+            
+            }
+
+            #auth-button{
+                background-color: #ff9d00;
+                color: black;
+                padding: 15px;
+                width: 100px;
+                font-weight: bold;
+                cursor: pointer;
+
+
+            }
+
+            #auth-button:hover{
+                background-color: #e68a00;
+
+
+            }
+
+            p{
+                margin-top: 25px;
+                text-align: center;
+                color: #888;
+
+            }
+
+            p > a{
+                color: #ff9d00;
+                text-decoration: none;
+                font-weight: bold;
+
+            }
+
+
+            #error-message{
+                color: #ff4444;
+                font-weight: bold;
+                margin-top: 15px;
+                text-align: center;
+
+            }
+
+            #success-message{
+                color: #00c851;
+                font-weight: bold;
+                margin-top: 15px;
+                text-align: center;
+            }
+
+        </style>
+
+
+
+    </head>
+
+    <body>
+        <?php
+              $messaggio = "";
+              if(!empty($_POST['username']) && !empty($_POST['password'])){
+                $user = $_POST['username'];
+                $pass = $_POST['password'];
+              
+
+              //utilizzo la funzione get_pwd che controlla se la password dell'utente $user è presente nel database
+              $hash = get_pwd($user, $connect); 
+
+              if(!$hash){
+                $messaggio = "<p id= 'error-message'> L'utente $user non esiste. <a href=\"login.php\"> Riprova </a> </p>";
+
+
+              }else{
+                if(password_verify($pass, $hash)){
+                    $messaggio = "<p id = 'success-message' > Login effettuato con successo. Ritorna alla <a href=\"index.html\">Home </a></p>";
+
+                }else{
+                    $messaggio = "<p id = 'error-message'> Username o password errati. <a href=\"login.php\">Riprova </a></p>";
+                  }
+               }
+            }
+        ?>
+
+        <div class="auth-container">
+            <div class="header">
+                <h1>My<span>CINEMA</span></h1>
+                <p id="header-par">Compila i campi a lato per accedere</p>
+
+            </div>
+            <div class="auth-box">
+                <form method="post" action = "login.php">
+                    <div class="input-group">
+                        <input type="text" name="username" id="username" placeholder="Username" required/>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" name="password" id="password" placeholder="Password" required />
+                    </div>
+
+                    <input id="auth-button" type="submit" name="Invia" value="Accedi" />
+                
+
+                </form>
+
+
+                <p>Sei un nuovo utente? <a href="registrazione.php">Registrati</a></p>
+
+                <?php
+                    echo $messaggio;
+                ?>
+            </div>
+        </div>
+    </body>
+
+</html>
+
+
+<?php
+    function get_pwd($user, $connect){
+        //query sql
+        $sql = 'SELECT password FROM account WHERE username = $1';
+
+       //creo il prepared statement mediante la funzione pg_prepare: 
+        //primo parametro --> la risorsa connection al database
+        // secondo parametro --> il nome da assegnare al prepared statement
+        //terzo parametro --> statement SQL parametrizzato. I parametri devono essere indicati usando i placeholder $1, $2, $3,....
+        $prep = pg_prepare($connect, "sqlPassword", $sql);
+        if(!$prep){
+            echo "Errore nella preparazione: " . pg_last_error($connect);
+            return false;
+        }
+
+         //eseguo il prepared statement mediante la funzione pg_execute
+        //primo parametro --> risorsa Connection al database
+        //secondo parametro --> il nome del prepared statement da eseguire
+        //terzo parametro --> array di valori da sostituire al placeholder
+
+        $ret = pg_execute($connect , "sqlPassword", array($user));
+        if(!$ret){
+            echo "ERRORE QUERY: " . pg_last_error($connect);
+            return false;
+
+        }else{
+            //utilizzo la funzione pg_fetch_assoc che restituisce la prossima riga del risultato di una query come array associativo
+            //Come parametri riceve:
+            // primo parametro --> la risorsa contenente i risultati della query;
+            // secondo parametro (opzionale) --> il numero della riga a cui vogliamo accedere. Se omesso, ad ogni chiamata viene restituita la riga successiva.
+            //Come risultato restituisce un array associativo in cui le chiavi sono i nomi dei campi della query.
+            //Restituisce falso se il numero di riga ($row) specificato è maggiore del numero di righe presenti in 
+            //$ret; se non ci sono altre righe; o in caso di errore
+            if($row = pg_fetch_assoc($ret)){
+                $pass = $row['password'];
+                return $pass;
+
+
+            }
+
+            return false;
+
+        }
+
+    }
+
+?>

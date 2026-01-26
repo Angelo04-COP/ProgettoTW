@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<?php session_start() ?>
 <html lang="it">
    <head>
         <title>MyCinema</title>
@@ -74,6 +74,36 @@
                 margin-left: auto; /*auto spinge questo elemento e i successivi a destra*/
 
             }
+
+            .user-status{
+                margin-left:auto;
+                color: #fff;
+                display:flex;
+                align-items: center;
+                padding: 15px;
+                margin-right: 10px;
+
+
+            }   
+
+            .user-status strong{
+                align-items: center;
+                color: #ff9d00;
+
+            }
+
+            .btn-profile{
+                color: white;
+                padding: 15px;
+
+            }
+
+            .btn-logout{
+                color: #ff4444 !important; /*Rosso per il logout*/
+                font-weight: bold;
+
+            }
+
 
 
             /*Sezione principale (menù laterale + contenuto)*/
@@ -198,12 +228,22 @@
             <!--Utilizzo il tag nav per realizzare una barra di navigazione orizzontale -->
             <nav>
                 <ul class="horizontal-nav">
-                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.php">Home</a></li>
                     <li><a href="#">Programmazione</a></li>
                     <li><a href="#">Abbonamenti</a></li>
                     <li><a href="#">Offerte</a></li>
-                    <li class="auth-group"><a href="login.php" id="login">Accedi</a></li>
-                    <li><a href="registrazione.php" id="reg">Registrati</a></li>
+                    <?php 
+                        if(isset($_SESSION['username'])){
+                            echo "<span class=\"user-status\">Benvenuto , <strong>" . $_SESSION['username'] . "</strong></span>";
+                            echo "<li><a href=\"profilo.php\" class=\"btn-profile\">Profilo</a></li>";
+                            echo "<li><a href=\"logout.php\" class=\"btn-logout\">Logout</a></li>";
+                        }else{
+                            echo "<li class=\"auth-group\"><a href=\"login.php\" id=\"login\">Accedi</a></li>";
+                            echo "<li><a href=\"registrazione.php\" id=\"reg\">Registrati</a></li>";
+                            
+                        }
+                    ?>
+                   
                 </ul>
             </nav>
         </header>
@@ -244,5 +284,59 @@
         <footer>
             <p> &copy; 2025 MyCinema</p>            
         </footer>
+
+        <script type = "text/javascript">
+            var inputElems = document.getElementsByClassName("horizontal-nav");
+            for(var i = 0; i < inputElems.length; i++){
+                inputElems[i].addEventListener("mouseover", handleMouseOver);
+                inputElems[i].addEventListener("mouseout", handleMouseOut);
+
+            }
+
+            function handleMouseOver(e){
+                //applico la sottolineatura solo ai link (tag a)
+                //si utilizza a tale scopo la proprietà tagName che ritorna il tag name dell'elemento su cui la proprietà
+                // è chiamata; la proprietà tagName ritorna una stringa che indica il tag name dell'elemento; ad esempio,
+                //se l'elemento ha tag name img, la proprietà ritorna IMG 
+                if(e.target.tagName == "A"){
+                    e.target.style.textDecoration = "underline";
+                }
+            }
+
+            function handleMouseOut(e){
+                if(e.target.tagName == "A"){    
+                    e.target.style.removeProperty("text-decoration");
+                }
+            }
+
+            //seleziona il primo elemento del DOM che corrisponde al selettore .btn-logout
+            var btnLogout = document.querySelector(".btn-logout");
+
+            //verifica che il pulsante Logout esista (se l'utente non è loggato non ci sarà)
+            if(btnLogout){
+                btnLogout.addEventListener("click", handleClick);
+            }
+
+            function handleClick(e){
+
+                //blocca il reindirizzamento automatico a 'logout.php'
+                e.preventDefault();
+
+                //recupero il valore dell'attributo href dell'elemento HTML che ha ricevuto l'evento (ossia il tag <a> con href='logout.php')
+                var infoUrl = this.href;
+
+                //il cursore diventa una rotellina
+                document.body.style.cursor = "wait";
+
+                //feedback visivo (il testo del link cambia da logout a "Chiusura sessione .....")
+                this.innerHTML = "Chiusura sessione.... 🎬";
+                
+                //attesa di 2 secondi prima di ricaricare la pagina
+                setTimeout(function(){
+                    window.location.href = infoUrl;
+                }, 2000);
+            }
+
+        </script>
     </body>
 </html>

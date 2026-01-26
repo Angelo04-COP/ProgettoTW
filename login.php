@@ -1,10 +1,34 @@
 <?php
     include 'db.php';
+    session_start();
 ?>
 <html lang="it">
     <head>
         <title>MyCinema : ACCEDI</title>
         <meta charset="utf-8">
+
+        <script type = "text/javascript">
+            function validaLogin(nomeModulo){
+                if(nomeModulo.username.value == ""){
+                    alert("⚠️ Attenzione! È richiesto un nome utente (username).");
+                    nomeModulo.username.focus();
+                    return false;
+                }
+
+                if(nomeModulo.password.value == ""){
+                    alert("⚠️ Attenzione! È richiesta una password.");
+                    nomeModulo.password.focus();
+                    return false;
+
+                }
+
+                return true;
+
+            }
+
+
+
+        </script>
 
         <style>
 
@@ -14,10 +38,6 @@
                 background-color: black;
                 justify-content: center;
                 padding: 100px;
-
-
-
-
             }
 
 
@@ -41,11 +61,6 @@
                     da un valore di colore, seguito da una o due posizioni di interruzione opzionale (ovvero una percentuale compresa tra 0% e 100% o una lunghezza 
                     lungo l'asse del gradiente).*/
                 background: radial-gradient(circle at center, #1a1a1a 0%, #000 100%); /*colore di sfondo*/
-    
-
-
-
-
             }
 
             .header{
@@ -60,11 +75,7 @@
             #header-par{
                 color: #666;
                 margin-top: 10px;
-
-
             }
-
-
 
             /*Box centrale per l'autenticazione*/
             .auth-box{
@@ -72,7 +83,6 @@
                 padding: 80px;
                 width: 100%;
                 border: 1px solid #222;
-
             }
 
             /*Elementi del form*/
@@ -115,10 +125,19 @@
 
             }
 
-            p > a{
+            .returnHome{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+            }
+
+            a{
                 color: #ff9d00;
-                text-decoration: none;
+                margin-top: 25px;
                 font-weight: bold;
+                text-decoration: none;
+                font-size: 15px;
 
             }
 
@@ -153,17 +172,24 @@
               
 
               //utilizzo la funzione get_pwd che controlla se la password dell'utente $user è presente nel database
-              $hash = get_pwd($user, $connect); 
+              $user_data = get_user_data($user, $connect); 
 
-              if(!$hash){
-                $messaggio = "<p id= 'error-message'> L'utente $user non esiste. <a href=\"login.php\"> Riprova </a> </p>";
+              if(!$user_data){
+                //utilizzo htmlspecialchars per evitare che qualcuno possa iniettare script malevoli nel campo di input
+                $safe_user = htmlspecialchars($user);
+                $messaggio = "<p id= 'error-message'> L'utente $safe_user non esiste. <a href=\"login.php\"> Riprova </a> </p>";
 
 
               }else{
-                if(password_verify($pass, $hash)){
-                    $messaggio = "<p id = 'success-message' > Login effettuato con successo. Ritorna alla <a href=\"index.html\">Home </a></p>";
-
-                }else{
+                if(password_verify($pass, $user_data['password'])){
+                    $messaggio = "<p id = 'success-message' > Login effettuato con successo. Ritorna alla Home </p>";
+                    //salvo nella sessione corrente i dati dell'utente
+                    $_SESSION['id'] = $user_data['id'];
+                    $_SESSION['nome'] = $user_data['nome'];
+                    $_SESSION['cognome'] = $user_data['cognome'];
+                    $_SESSION['username'] = $user_data['username'];
+                    $_SESSION['email'] = $user_data['email'];
+                    }else{
                     $messaggio = "<p id = 'error-message'> Username o password errati. <a href=\"login.php\">Riprova </a></p>";
                   }
                }
@@ -177,17 +203,15 @@
 
             </div>
             <div class="auth-box">
-                <form method="post" action = "login.php">
+                <form onsubmit = "return validaLogin(this);" method="post" action = "login.php">
                     <div class="input-group">
-                        <input type="text" name="username" id="username" placeholder="Username" required/>
+                        <input type="text" name="username" id="username" placeholder="Username"/>
                     </div>
                     <div class="input-group">
-                        <input type="password" name="password" id="password" placeholder="Password" required />
+                        <input type="password" name="password" id="password" placeholder="Password"/>
                     </div>
 
                     <input id="auth-button" type="submit" name="Invia" value="Accedi" />
-                
-
                 </form>
 
 
@@ -196,17 +220,61 @@
                 <?php
                     echo $messaggio;
                 ?>
+
+                <div class = "returnHome">
+                    <a href="index.php">&larr; Torna alla Home</a>
+
+                </div>
             </div>
         </div>
+
+        <script type = "text/javascript">
+            //individuo gli elementi che hanno il tag input
+            var inputElements = document.getElementsByTagName("input");
+            for(var i = 0; i < inputElements.length; i++){
+                inputElements[i].onfocus = handleFocusEvent;
+                inputElements[i].onblur = handleFocusEvent;
+
+            }
+
+            function handleFocusEvent(e){
+                if(e.type == "focus"){
+                    e.target.style.border = "thick solid #ff9d00";
+
+                }else{
+                    e.target.style.removeProperty("border");
+
+                }
+            }
+
+            //individuo gli elementi che anno il tag a
+            var inputElems = document.getElementsByTagName("a");
+
+            for(var i = 0; i < inputElems.length; i++){
+                inputElems[i].addEventListener("mouseover", handleMouseOver);
+                inputElems[i].addEventListener("mouseout", handleMouseOut);
+            }
+
+            function handleMouseOver(e){
+                e.target.style.textDecoration = "underline";
+
+            }
+
+            function handleMouseOut(e){
+                e.target.style.removeProperty("text-decoration");
+            }
+
+
+        </script>
     </body>
 
 </html>
 
 
 <?php
-    function get_pwd($user, $connect){
+    function get_user_data($user, $connect){
         //query sql
-        $sql = 'SELECT password FROM account WHERE username = $1';
+        $sql = 'SELECT id, nome, cognome, username, email, password FROM account WHERE username = $1';
 
        //creo il prepared statement mediante la funzione pg_prepare: 
         //primo parametro --> la risorsa connection al database
@@ -237,10 +305,7 @@
             //Restituisce falso se il numero di riga ($row) specificato è maggiore del numero di righe presenti in 
             //$ret; se non ci sono altre righe; o in caso di errore
             if($row = pg_fetch_assoc($ret)){
-                $pass = $row['password'];
-                return $pass;
-
-
+                return $row;
             }
 
             return false;

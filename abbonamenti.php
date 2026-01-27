@@ -65,12 +65,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_piano'])) {
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <title>Abbonamenti Cinema</title>
+    <title>Abbonamenti MyCinema</title>
     <style>
         /* CSS Integrato */
         body { 
             font-family: 'Segoe UI', Tahoma, sans-serif; 
-            background-color: #f0f2f5; 
+            background-color: black; 
             margin: 0; 
             padding: 40px; 
         }
@@ -92,14 +92,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_piano'])) {
         }
 
         .card { 
-            background: white; 
+            background: #dec6b1ff; 
             border-radius: 15px; 
             padding: 25px; 
             text-align: center; 
             box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
             transition: all 0.3s ease; 
-            border: 1px solid #e0e0e0; 
-            border-top: 5px solid #007bff; 
+            border: 1px solid #d77c37ff; 
+            border-top: 8px solid #d77c37ff; 
             display: flex; 
             flex-direction: column; 
             justify-content: space-between; 
@@ -116,7 +116,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_piano'])) {
             border-left: 1px solid #d4af37; 
             border-right: 1px solid #d4af37; 
             border-bottom: 1px solid #d4af37; 
-            background: linear-gradient(145deg, #ffffff, #fffcf0); 
         }
 
         .badge-premium { 
@@ -130,6 +129,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_piano'])) {
             margin-bottom: 10px; 
         }
 
+        h1 {
+            color: #d77c37ff;
+        }
+
         h3 { 
             margin: 10px 0; 
             color: #1a1a1a; 
@@ -138,21 +141,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_piano'])) {
         }
 
         .price { 
-            font-size: 30px; 
+            font-size: 24px; 
             font-weight: bold; 
-            color: #27ae60; 
+            color: #6c3902ff; 
             margin: 15px 0; 
+            margin-bottom: 20px;
         }
 
         .desc { 
             font-size: 14px; 
-            color: #666; 
+            color: #050505ff; 
             margin-bottom: 20px; 
             min-height: 45px; 
         }
 
         .btn { 
-            background: linear-gradient(to right, #007bff, #00c6ff); 
+            background: #c57131ff;
             color: white; 
             border: none; 
             padding: 12px; 
@@ -170,7 +174,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_piano'])) {
         }
 
         .btn:disabled {
-            background: #ccc;
+            background: #ce9261ff;
             cursor: not-allowed;
             transform: none;
         }
@@ -187,7 +191,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_piano'])) {
 </head>
 <body>
     <div class="header-nav">
-        <h1>Abbonamenti Cinema</h1>
+        <h1>Abbonamenti MyCinema</h1>
         <a href="carrello.php" class="btn-nav">🛒 Carrello (<?php echo isset($_SESSION['carrello']) ? count($_SESSION['carrello']) : 0; ?>)</a>
     </div>
 

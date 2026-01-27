@@ -308,7 +308,7 @@ $data_oggi = '2026-01-26';
                     <!--Ottengo gli orari delle proiezioni del film-->
                     <div class="orari-section" style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 15px;">
                         <?php
-                        $query_orari="SELECT p.data_orario, s.nome AS nome_sala, p.prezzo
+                        $query_orari="SELECT p.id, p.data_orario, s.nome AS nome_sala, p.prezzo
                                      FROM proiezioni p
                                      JOIN sale s ON p.sala_id = s.id
                                      WHERE p.film_id = $1 AND DATE(p.data_orario) = $2
@@ -320,11 +320,13 @@ $data_oggi = '2026-01-26';
                             $orario_inizio = date("H:i", strtotime($orario['data_orario']));
                         ?>
                             <!--Card per visualizzare orario, sala e prezzo del film-->
+                        <a href="prenotazione.php?id=<?php echo $orario['id']; ?>" style="text-decoration: none;">
                             <div class = "time-card">
                                 <div id="hours"><?php echo $orario_inizio; ?></div>
                                 <div id="hall"><?php echo $orario['nome_sala']; ?></div>
                                 <div id="price"><?php echo $orario['prezzo']; ?></div>
                             </div>
+                        </a>
                         <?php } //fine ciclo orari ?>
                     </div> <!--fine orari-section-->
                 

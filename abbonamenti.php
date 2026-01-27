@@ -144,7 +144,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_piano'])) {
             color: #d77c37ff;
         }
 
-        /*SELETTORE DISCENDENTE (descendant - spazio tra i due) */
+        /*SELETTORE DISCENDENTE */
         .card h3 { 
             margin: 10px 0; 
             color: #1a1a1a; 

@@ -17,13 +17,13 @@ $totale = 0;
     <style>
         body { 
             font-family: 'Segoe UI', Tahoma, sans-serif; 
-            background-color: #272626ff; 
+            background-color: #1d1c1cff; 
             margin: 0; 
             padding: 40px; 
         }
 
         .container-carrello { 
-            background: #d9d9d9ff; 
+            background: #c0bdbdff; 
             max-width: 800px; 
             margin: 0 auto; 
             padding: 40px; 

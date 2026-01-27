@@ -61,17 +61,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <style>
         body { 
             font-family: 'Segoe UI', Tahoma, sans-serif; 
-            background-color: #f0f2f5; 
+            background-color: #323232ff; 
             margin: 0; 
             padding: 40px; 
         }
 
         .container-carrello { 
-            background: white; 
+            background: #9c9999ff; 
             max-width: 500px; 
             margin: 0 auto; 
             padding: 40px; 
-            border-radius: 20px; 
+            border-radius: 15px; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
         }
 
@@ -88,14 +88,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         .campo label { 
             font-size: 14px; 
-            color: #555; 
+            color: #292828ff; 
             margin-bottom: 5px; 
             font-weight: 600; 
         }
 
         .campo input { 
             padding: 12px; 
-            border: 1px solid #ddd; 
+            border: 1px solid #696969ff; 
             border-radius: 8px; 
             font-size: 16px; 
             outline: none; 
@@ -103,12 +103,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         .campo input:focus { 
-            border-color: #E50914; 
+            border-color: #cc6322ff; 
             box-shadow: 0 0 5px rgba(229, 9, 20, 0.2); 
         }
 
         .btn-paga { 
-            background-color: #28a745; 
+            background-color: #c1782fff; 
             color: white; 
             border: none; 
             padding: 15px; 
@@ -122,7 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         .btn-paga:hover { 
-            background-color: #218838; 
+            background-color: #c1782fff; 
             transform: translateY(-2px); 
         }
         
@@ -169,7 +169,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="container-carrello">
         <header style="text-align: center; margin-bottom: 30px;">
             <h1>Pagamento 💳</h1>
-            <p style="color: #666;">Inserisci i dati della tua carta</p>
+            <p style="color: #302d2dff;">Inserisci i dati della tua carta</p>
             <?php if($errore): ?>
                 <p style="color: red; font-weight: bold;"><?php echo $errore; ?></p>
             <?php endif; ?>
@@ -200,12 +200,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <button type="submit" class="btn-paga">Conferma e Paga Ora</button>
 
             <div style="text-align: center; margin-top: 15px;">
-                <a href="carrello.php" style="color: #444; text-decoration: underline; font-size: 14px;">
+                <a href="carrello.php" style="color: #3d3c3cff; text-decoration: underline; font-size: 14px;">
                     ← Modifica ordine (Torna al carrello)
                 </a>
             </div>
         </form>
-        <p style="text-align: center; margin-top: 20px; font-size: 12px; color: #888;">🔒 Pagamento criptato e sicuro</p>
+        <p style="text-align: center; margin-top: 20px; font-size: 12px; color: #5c5959ff;">🔒 Pagamento criptato e sicuro</p>
     </div>
 </body>
 </html>

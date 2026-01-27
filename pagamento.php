@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('db.php'); // Assicurati che $connect sia definita qui
+include('db.php'); 
 
 // Controllo sicurezza: Utente loggato e Carrello non vuoto
 if (!isset($_SESSION['user_id'])) {
@@ -15,11 +15,9 @@ if (empty($_SESSION['carrello'])) {
 
 $errore = "";
 
-// Logica di elaborazione al POST
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $id_utente = $_SESSION['user_id'];
     
-    // Inizia una transazione per sicurezza: o si salva tutto o niente
     pg_query($connect, "BEGIN");
     $check_insert = true;
 
@@ -29,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Calcolo durata: 30 giorni per i mensili, 365 per il resto
         $durata = (stripos($item['nome'], 'mensile') !== false) ? '30 days' : '365 days';
         
-        // Query utilizzando la sintassi PostgreSQL per le date che hai nel DB
+        // Query utilizzando la sintassi PostgreSQL per le date nel DB
         $query = "INSERT INTO abbonamenti (id_utente, id_piano, data_inizio, data_fine, stato) 
                   VALUES ($1, $2, CURRENT_DATE, CURRENT_DATE + INTERVAL '$durata', 'attivo')";
         

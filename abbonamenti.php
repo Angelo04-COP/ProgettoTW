@@ -94,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_piano'])) {
 
         .card { 
             background: #dec6b1ff; 
-            border-radius: 15px; 
+            border-radius: 8px; 
             padding: 25px; 
             text-align: center; 
             box-shadow: 0 4px 12px rgba(0,0,0,0.08); 

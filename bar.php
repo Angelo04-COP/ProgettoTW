@@ -167,7 +167,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_prod'])) {
 
     <div class="prodotti-container">
         <?php
-        $query = "SELECT * FROM prodotti_bar ORDER BY categoria, id";
+        $query = "SELECT * FROM prodotti_bar ORDER BY nome ASC";
         $result = pg_query($connect, $query);
         
         while($row = pg_fetch_assoc($result)){

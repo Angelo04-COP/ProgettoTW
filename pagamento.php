@@ -3,7 +3,7 @@ session_start();
 include('db.php'); 
 
 // Controllo sicurezza: Utente loggato e Carrello non vuoto
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['id'])) {
     header("Location: login.php?msg=necessario_login");
     exit();
 }
@@ -16,7 +16,7 @@ if (empty($_SESSION['carrello'])) {
 $errore = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $id_utente = $_SESSION['user_id'];
+    $id_utente = $_SESSION['id'];
     
     pg_query($connect, "BEGIN");
     $check_insert = true;

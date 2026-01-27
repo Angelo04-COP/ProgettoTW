@@ -11,7 +11,7 @@ $piani = pg_fetch_all($result);
 if (!$piani) { $piani = []; }
 
 // Controllo piani già attivi nel DB ---
-$id_utente = $_SESSION['user_id'] ?? null;
+$id_utente = $_SESSION['id'] ?? null;
 $piani_gia_attivi = [];
 
 if ($id_utente) {

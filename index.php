@@ -41,20 +41,11 @@ $data_oggi = '2026-01-26';
                 list-style-type: none;
                 margin: 0;
                 padding: 0 20px;
-                /*Colore di sfondo: la funzione linear-gradient imposta un gradiente lineare come colore di sfondo; un gradiente lineare
-                  è una transizione sfumata tra due o più colori che si sviluppa lungo una linea retta:
-                     1) "to bottom" definisce l'orientamento del gradiente: in questo caso il colore inizia dalla parte superiore dell'elemento e 
-                        sfuma verso la parte inferiore;
-                      2) il colore di inizio #2f3a52 (un blu desaturato) si trova in alto;
-                      3) il colore di fine #262f43 (variante più scura del blu) si trova in basso
-                      Usando questa funzione la barra di navigazione orizzontale sembra un elemento con una sua profondità che si integra con
-                      lo sfondo scuro del sito.*/
-                background: linear-gradient(to bottom,#2f3a52,#262f43);
+                background:  #cd7532ff;
                 width: 100%;  /*allunga la barra su tutta la larghezza*/
                 display: flex; /*rende la barra orizzontale*/
                 justify-content: center; /*centra la barra*/
-                
-
+                border-radius: 10px; 
             }
 
 
@@ -62,17 +53,17 @@ $data_oggi = '2026-01-26';
             /*stile per le voci della barra */
             .horizontal-nav li a{
                 display: block;
-                color: white;
+                color: #000000ff;
                 text-align: center;
-                text-decoration: none;
+                font-weight: 060;
+                text-decoration: underline;
                 font-family: Arial, sans-serif;
                 padding: 20px;
-
             }
 
             .horizontal-nav li:hover{
-                background-color: #333;
-
+                background-color: #c09673ff;
+                border-radius: 5px; 
             }
 
             .auth-group{

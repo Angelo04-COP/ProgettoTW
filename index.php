@@ -41,11 +41,11 @@ $data_oggi = '2026-01-26';
                 list-style-type: none;
                 margin: 0;
                 padding: 0 20px;
-                background:  #cd7532ff;
+                background:  #a85f27ff;
                 width: 100%;  /*allunga la barra su tutta la larghezza*/
                 display: flex; /*rende la barra orizzontale*/
                 justify-content: center; /*centra la barra*/
-                border-radius: 10px; 
+                border-radius: 5px; 
             }
 
   

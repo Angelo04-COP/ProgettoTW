@@ -65,7 +65,8 @@
 
             .header{
                 text-align: center;
-                margin-bottom: 30px;
+                margin-right: 80px;   /* Crea lo spazio tra MyCinema e il box di login */
+                max-width: 300px;     /* Evita che il testo si allarghi troppo */
             }
 
             h1{

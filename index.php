@@ -234,10 +234,8 @@ $data_oggi = '2026-01-26';
             <nav>
                 <ul class="horizontal-nav">
                     <li><a href="index.php">Home</a></li>
-                    <li><a href="#">Programmazione</a></li>
                     <li><a href="abbonamenti.php">Abbonamenti</a></li>
                     <li><a href="bar.php">Bar</a></li>
-                    <li><a href="#">Offerte</a></li>
                     <?php 
                         if(isset($_SESSION['username'])){
                             echo "<span class=\"user-status\">Benvenuto , <strong>" . $_SESSION['username'] . "</strong></span>";

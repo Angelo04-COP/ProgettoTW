@@ -128,42 +128,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         
     </style>
 
-    <script type="text/javascript">
-        function validaPagamento(f) {
-            // Controllo Titolare
-            var haNumeri = /\d/.test(f.titolare.value);
-            if (f.titolare.value.trim() === "" || haNumeri) {
-                alert("⚠️ Titolare non valido: il campo non può essere vuoto e non può contenere numeri.");
-                f.titolare.focus();
-                return false;
-            }
 
-            // Controllo Numero Carta (solo cifre, lunghezza 16)
-            var numCarta = f.numero_carta.value.replace(/\s/g, ''); // Rimuove eventuali spazi
-            if (numCarta.length !== 16 || isNaN(numCarta)) {
-                alert("⚠️ Il numero della carta deve essere composto da 16 cifre.");
-                f.numero_carta.focus();
-                return false;
-            }
-
-            // Controllo Scadenza (Formato MM/AA semplice)
-            if (f.scadenza.value.length < 5 || !f.scadenza.value.includes('/')) {
-                alert("⚠️ Inserisci la scadenza nel formato MM/AA.");
-                f.scadenza.focus();
-                return false;
-            }
-
-            // Controllo CVV (3 cifre)
-            if (f.cvv.value.length !== 3 || isNaN(f.cvv.value)) {
-                alert("⚠️ Il codice CVV deve essere di 3 cifre.");
-                f.cvv.focus();
-                return false;
-            }
-
-            return true; 
-            // Se tutto è corretto, il modulo viene inviato al PHP
-        }
-    </script>
 </head>
 <body>
     <div class="container-carrello">
@@ -207,5 +172,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </form>
         <p style="text-align: center; margin-top: 20px; font-size: 12px; color: #5c5959ff;">🔒 Pagamento criptato e sicuro</p>
     </div>
+    <script src="validazione_pagamento.js"></script>
 </body>
 </html>

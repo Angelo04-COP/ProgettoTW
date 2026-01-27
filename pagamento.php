@@ -22,15 +22,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $check_insert = true;
 
     foreach ($_SESSION['carrello'] as $item) {
-        $id_piano = $item['id'];
-        
-        // Calcolo durata: 30 giorni per i mensili, 365 per il resto
-        $durata = (stripos($item['nome'], 'mensile') !== false) ? '30 days' : '365 days';
-        
-        $query = "INSERT INTO abbonamenti (id_utente, id_piano, data_inizio, data_fine, stato) 
-                  VALUES ($1, $2, CURRENT_DATE, CURRENT_DATE + INTERVAL '$durata', 'attivo')";
-        
-        $res = pg_query_params($connect, $query, array($id_utente, $id_piano));
+        if (isset($item['tipo_item']) && $item['tipo_item'] == 'bar') {
+            // Inserimento per i prodotti del BAR
+            $query = "INSERT INTO acquisti_bar (utente_id, prodotto_id, prezzo_pagato) VALUES ($1, $2, $3)";
+            $res = pg_query_params($connect, $query, array($id_utente, $item['id'], $item['prezzo']));
+        } else {
+            // Inserimento per gli ABBONAMENTI (Logica originale)
+            // Calcolo durata: 30 giorni per i mensili, 365 per il resto
+            $durata = (stripos($item['nome'], 'mensile') !== false) ? '30 days' : '365 days';
+            $query = "INSERT INTO abbonamenti (id_utente, id_piano, data_inizio, data_fine, stato) 
+                      VALUES ($1, $2, CURRENT_DATE, CURRENT_DATE + INTERVAL '$durata', 'attivo')";
+            $res = pg_query_params($connect, $query, array($id_utente, $item['id']));
+        }
         
         if (!$res) {
             $check_insert = false;

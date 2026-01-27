@@ -48,6 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_piano'])) {
     if (!$gia_presente_in_sessione && !in_array($id_scelto, $piani_gia_attivi)) {
         foreach($piani as $p) {
             if($p['id'] == $id_scelto) {
+                $p['tipo_item'] = 'abbonamento';
                 $_SESSION['carrello'][] = $p;
                 header("Location: abbonamenti.php?aggiunto=1");
                 exit();

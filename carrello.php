@@ -130,6 +130,7 @@ $totale = 0;
 <body>
     <div class="container-carrello">
         <a href="abbonamenti.php" class="btn-nav">← Torna ai piani</a>
+        <a href="bar.php" class="btn-nav">← Torna al bar</a>
         <h2>Il tuo Carrello</h2>
 
         <?php if (!isset($_SESSION['carrello']) || count($_SESSION['carrello']) == 0): ?>

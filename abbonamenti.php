@@ -10,30 +10,52 @@ $piani = pg_fetch_all($result);
 // Se il database è vuoto, inizializzio un array vuoto 
 if (!$piani) { $piani = []; }
 
+// Controllo piani già attivi nel DB ---
+$id_utente = $_SESSION['id'] ?? null;
+$piani_gia_attivi = [];
+
+if ($id_utente) {
+    // Cerchiamo gli ID dei piani che l'utente ha già acquistato e sono ancora attivi
+    $query_check = "SELECT id_piano FROM abbonamenti 
+                    WHERE id_utente = $1 
+                    AND stato = 'attivo' 
+                    AND data_fine >= CURRENT_DATE";
+    $res_check = pg_query_params($connect, $query_check, array($id_utente));
+    if ($res_check) {
+        $piani_gia_attivi = pg_fetch_all_columns($res_check) ?: [];
+    }
+}
+
+
 $errore = "";
 
 // Gestione dell'aggiunta al carrello
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_piano'])) {
     $id_scelto = (int)$_POST['id_piano'];
-    $gia_presente = false;
+    $gia_presente_in_sessione = false;
     
+    // Controllo se è già nel carrello (sessione)
     if (isset($_SESSION['carrello'])) {
         foreach ($_SESSION['carrello'] as $item) {
             if ($item['id'] == $id_scelto) { 
-                $gia_presente = true; 
+                $gia_presente_in_sessione = true; 
                 break; 
             }
         }
     }
     
-    if (!$gia_presente) {
+    // Controllo finale: non deve essere né nel carrello né già attivo nel DB
+    if (!$gia_presente_in_sessione && !in_array($id_scelto, $piani_gia_attivi)) {
         foreach($piani as $p) {
             if($p['id'] == $id_scelto) {
+                $p['tipo_item'] = 'abbonamento';
                 $_SESSION['carrello'][] = $p;
                 header("Location: abbonamenti.php?aggiunto=1");
                 exit();
             }
         }
+    } elseif (in_array($id_scelto, $piani_gia_attivi)) {
+        $errore = "Hai già questo abbonamento attivo!";
     } else {
         $errore = "Questo abbonamento è già nel tuo carrello!";
     }
@@ -43,12 +65,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_piano'])) {
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <title>Abbonamenti Cinema</title>
+    <title>Abbonamenti MyCinema</title>
     <style>
         /* CSS Integrato */
         body { 
             font-family: 'Segoe UI', Tahoma, sans-serif; 
-            background-color: #f0f2f5; 
+            background-color: black; 
             margin: 0; 
             padding: 40px; 
         }
@@ -59,6 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_piano'])) {
             align-items: center; 
             max-width: 1200px; 
             margin: 0 auto 40px; 
+            gap: 20px;
         }
 
         .container { 
@@ -70,14 +93,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_piano'])) {
         }
 
         .card { 
-            background: white; 
+            background: #dec6b1ff; 
             border-radius: 15px; 
             padding: 25px; 
             text-align: center; 
             box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
             transition: all 0.3s ease; 
-            border: 1px solid #e0e0e0; 
-            border-top: 5px solid #007bff; 
+            border: 1px solid #d77c37ff; 
+            border-top: 8px solid #d77c37ff; 
             display: flex; 
             flex-direction: column; 
             justify-content: space-between; 
@@ -94,7 +117,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_piano'])) {
             border-left: 1px solid #d4af37; 
             border-right: 1px solid #d4af37; 
             border-bottom: 1px solid #d4af37; 
-            background: linear-gradient(145deg, #ffffff, #fffcf0); 
         }
 
         .badge-premium { 
@@ -108,6 +130,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_piano'])) {
             margin-bottom: 10px; 
         }
 
+        h1 {
+            color: #d77c37ff;
+        }
+
         h3 { 
             margin: 10px 0; 
             color: #1a1a1a; 
@@ -116,21 +142,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_piano'])) {
         }
 
         .price { 
-            font-size: 30px; 
+            font-size: 24px; 
             font-weight: bold; 
-            color: #27ae60; 
+            color: #6c3902ff; 
             margin: 15px 0; 
+            margin-bottom: 20px;
         }
 
         .desc { 
             font-size: 14px; 
-            color: #666; 
+            color: #050505ff; 
             margin-bottom: 20px; 
             min-height: 45px; 
         }
 
         .btn { 
-            background: linear-gradient(to right, #007bff, #00c6ff); 
+            background: #c57131ff;
             color: white; 
             border: none; 
             padding: 12px; 
@@ -142,9 +169,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_piano'])) {
             width: 100%; 
         }
 
-        .btn:hover { 
+        .btn:hover:not(:disabled) { 
             transform: scale(1.05); 
             box-shadow: 0 5px 15px rgba(0,123,255,0.4); 
+        }
+
+        .btn:disabled {
+            background: #ce9261ff;
+            cursor: not-allowed;
+            transform: none;
         }
 
         .btn-nav { 
@@ -159,7 +192,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_piano'])) {
 </head>
 <body>
     <div class="header-nav">
-        <h1>Abbonamenti Cinema</h1>
+        <a href="index.php" class="btn-nav">🏠 Home</a>
+        <h1>Abbonamenti MyCinema</h1>
         <a href="carrello.php" class="btn-nav">🛒 Carrello (<?php echo isset($_SESSION['carrello']) ? count($_SESSION['carrello']) : 0; ?>)</a>
     </div>
 
@@ -185,7 +219,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_piano'])) {
 
             <form method="POST">
                 <input type="hidden" name="id_piano" value="<?php echo $p['id']; ?>">
-                <button type="submit" class="btn">Scegli Abbonamento</button>
+                
+                <?php if (in_array($p['id'], $piani_gia_attivi)): ?>
+                    <button type="button" class="btn" disabled>Attivo</button>
+                <?php else: ?>
+                    <button type="submit" class="btn">Scegli</button>
+                <?php endif; ?>
             </form>
        </div>
     <?php endforeach; ?>

@@ -81,6 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_piano'])) {
             align-items: center; 
             max-width: 1200px; 
             margin: 0 auto 40px; 
+            gap: 20px;
         }
 
         .container { 
@@ -191,6 +192,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_piano'])) {
 </head>
 <body>
     <div class="header-nav">
+        <a href="index.php" class="btn-nav">🏠 Home</a>
         <h1>Abbonamenti MyCinema</h1>
         <a href="carrello.php" class="btn-nav">🛒 Carrello (<?php echo isset($_SESSION['carrello']) ? count($_SESSION['carrello']) : 0; ?>)</a>
     </div>

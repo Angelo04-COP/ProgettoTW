@@ -27,7 +27,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Calcolo durata: 30 giorni per i mensili, 365 per il resto
         $durata = (stripos($item['nome'], 'mensile') !== false) ? '30 days' : '365 days';
         
-        // Query utilizzando la sintassi PostgreSQL per le date nel DB
         $query = "INSERT INTO abbonamenti (id_utente, id_piano, data_inizio, data_fine, stato) 
                   VALUES ($1, $2, CURRENT_DATE, CURRENT_DATE + INTERVAL '$durata', 'attivo')";
         
@@ -40,12 +39,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     if ($check_insert) {
-        pg_query($connect, "COMMIT"); // Conferma i dati nel DB
-        unset($_SESSION['carrello']); // Svuota il carrello
-        header("Location: profilo.php"); // Vai al profilo 
+        pg_query($connect, "COMMIT");
+        unset($_SESSION['carrello']);
+        header("Location: profilo.php"); 
         exit();
     } else {
-        pg_query($connect, "ROLLBACK"); // Cancella inserimenti parziali in caso di errore
+        pg_query($connect, "ROLLBACK");
         $errore = "Si è verificato un errore tecnico nel salvataggio. Riprova.";
     }
 }
@@ -116,14 +115,52 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             cursor: pointer; 
             width: 100%; 
             transition: 0.3s; 
+            margin-top: 10px; 
         }
 
         .btn-paga:hover { 
             background-color: #218838; 
             transform: translateY(-2px); 
         }
-
+        
     </style>
+
+    <script type="text/javascript">
+        function validaPagamento(f) {
+            // Controllo Titolare
+            var haNumeri = /\d/.test(f.titolare.value);
+            if (f.titolare.value.trim() === "" || haNumeri) {
+                alert("⚠️ Titolare non valido: il campo non può essere vuoto e non può contenere numeri.");
+                f.titolare.focus();
+                return false;
+            }
+
+            // Controllo Numero Carta (solo cifre, lunghezza 16)
+            var numCarta = f.numero_carta.value.replace(/\s/g, ''); // Rimuove eventuali spazi
+            if (numCarta.length !== 16 || isNaN(numCarta)) {
+                alert("⚠️ Il numero della carta deve essere composto da 16 cifre.");
+                f.numero_carta.focus();
+                return false;
+            }
+
+            // Controllo Scadenza (Formato MM/AA semplice)
+            if (f.scadenza.value.length < 5 || !f.scadenza.value.includes('/')) {
+                alert("⚠️ Inserisci la scadenza nel formato MM/AA.");
+                f.scadenza.focus();
+                return false;
+            }
+
+            // Controllo CVV (3 cifre)
+            if (f.cvv.value.length !== 3 || isNaN(f.cvv.value)) {
+                alert("⚠️ Il codice CVV deve essere di 3 cifre.");
+                f.cvv.focus();
+                return false;
+            }
+
+            return true; 
+            // Se tutto è corretto, il modulo viene inviato al PHP
+        }
+    </script>
 </head>
 <body>
     <div class="container-carrello">
@@ -135,25 +172,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <?php endif; ?>
         </header>
 
-        <form method="POST" class="form-pagamento">
+        <form method="POST" name="formPagamento" class="form-pagamento" onsubmit="return validaPagamento(this);">
             <div class="campo">
                 <label>Titolare della carta</label>
-                <input type="text" name="titolare" placeholder="Mario Rossi" required>
+                <input type="text" name="titolare" placeholder="Mario Rossi">
             </div>
+            
             <div class="campo">
                 <label>Numero Carta</label>
-                <input type="text" name="numero_carta" placeholder="1234 5678 1234 5678" maxlength="16" required>
+                <input type="text" name="numero_carta" placeholder="1234567812345678" maxlength="16">
             </div>
+
             <div style="display: flex; gap: 20px;">
                 <div class="campo" style="flex: 2;">
                     <label>Scadenza</label>
-                    <input type="text" name="scadenza" placeholder="MM/AA" maxlength="5" required>
+                    <input type="text" name="scadenza" placeholder="MM/AA" maxlength="5">
                 </div>
                 <div class="campo" style="flex: 1;">
                     <label>CVV</label>
-                    <input type="text" name="cvv" placeholder="123" maxlength="3" required>
+                    <input type="text" name="cvv" placeholder="123" maxlength="3">
                 </div>
             </div>
+
             <button type="submit" class="btn-paga">Conferma e Paga Ora</button>
 
             <div style="text-align: center; margin-top: 15px;">

@@ -168,7 +168,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_piano'])) {
             box-shadow: 0 5px 15px rgba(0,123,255,0.4); 
         }
 
-        /* Stile per il pulsante disabilitato */
         .btn:disabled {
             background: #ccc;
             cursor: not-allowed;

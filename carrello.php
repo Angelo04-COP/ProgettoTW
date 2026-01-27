@@ -17,22 +17,22 @@ $totale = 0;
     <style>
         body { 
             font-family: 'Segoe UI', Tahoma, sans-serif; 
-            background-color: #f0f2f5; 
+            background-color: #272626ff; 
             margin: 0; 
             padding: 40px; 
         }
 
         .container-carrello { 
-            background: white; 
+            background: #d9d9d9ff; 
             max-width: 800px; 
             margin: 0 auto; 
             padding: 40px; 
-            border-radius: 20px; 
+            border-radius: 10px; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
         }
 
         h2 { 
-            color: #1a1a1a; 
+            color: #0b0b0bff; 
             margin-bottom: 20px; 
         }
 
@@ -45,8 +45,8 @@ $totale = 0;
         th { 
             padding: 15px; 
             text-align: left; 
-            border-bottom: 2px solid #eee; 
-            color: #444; 
+            border-bottom: 2px solid #aeacacff; 
+            color: #0d0d0dff; 
             font-weight: bold; 
             text-transform: uppercase; 
             font-size: 14px; 
@@ -55,28 +55,27 @@ $totale = 0;
         td { 
             padding: 20px 15px; 
             text-align: left; 
-            border-bottom: 1px solid #eee; 
+            border-bottom: 1px solid #c7c5c5ff; 
             font-weight: normal; 
-            color: #444; 
+            color: #313030ff; 
         }
 
         .riepilogo-totale { 
             margin-top: 25px; 
             text-align: right; 
-            border-top: 1px solid #eee; 
             padding-top: 15px; 
         }
 
         .testo-totale { 
             font-size: 24px; 
             font-weight: 300; 
-            color: #2c3e50; 
+            color: #050505ff; 
             margin-bottom: 15px; 
         }
 
         .testo-totale strong { 
             font-weight: 600; 
-            color: #000; 
+            color: #000000ff; 
         }
 
         .azioni-carrello { 
@@ -87,7 +86,7 @@ $totale = 0;
         }
 
         .btn-paga { 
-            background-color: #28a745; 
+            background-color: #c1782fff; 
             color: white; 
             border: none; 
             padding: 10px 25px; 
@@ -100,13 +99,13 @@ $totale = 0;
         }
 
         .btn-paga:hover { 
-            background-color: #218838; 
+            background-color: #c1782fff; 
             transform: translateY(-2px); 
             box-shadow: 0 4px 10px rgba(40,167,69,0.2); 
         }
 
         .btn-svuota { 
-            color: #ff4757; 
+            color: #723411ff; 
             text-decoration: none; 
             font-size: 14px; 
         }
@@ -117,7 +116,7 @@ $totale = 0;
 
         .btn-nav { 
             text-decoration: none; 
-            background: #333; 
+            background: #646363ff; 
             color: white; 
             padding: 10px 20px; 
             border-radius: 8px; 

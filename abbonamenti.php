@@ -10,23 +10,42 @@ $piani = pg_fetch_all($result);
 // Se il database è vuoto, inizializzio un array vuoto 
 if (!$piani) { $piani = []; }
 
+// Controllo piani già attivi nel DB ---
+$id_utente = $_SESSION['user_id'] ?? null;
+$piani_gia_attivi = [];
+
+if ($id_utente) {
+    // Cerchiamo gli ID dei piani che l'utente ha già acquistato e sono ancora attivi
+    $query_check = "SELECT id_piano FROM abbonamenti 
+                    WHERE id_utente = $1 
+                    AND stato = 'attivo' 
+                    AND data_fine >= CURRENT_DATE";
+    $res_check = pg_query_params($connect, $query_check, array($id_utente));
+    if ($res_check) {
+        $piani_gia_attivi = pg_fetch_all_columns($res_check) ?: [];
+    }
+}
+
+
 $errore = "";
 
 // Gestione dell'aggiunta al carrello
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_piano'])) {
     $id_scelto = (int)$_POST['id_piano'];
-    $gia_presente = false;
+    $gia_presente_in_sessione = false;
     
+    // Controllo se è già nel carrello (sessione)
     if (isset($_SESSION['carrello'])) {
         foreach ($_SESSION['carrello'] as $item) {
             if ($item['id'] == $id_scelto) { 
-                $gia_presente = true; 
+                $gia_presente_in_sessione = true; 
                 break; 
             }
         }
     }
     
-    if (!$gia_presente) {
+    // Controllo finale: non deve essere né nel carrello né già attivo nel DB
+    if (!$gia_presente_in_sessione && !in_array($id_scelto, $piani_gia_attivi)) {
         foreach($piani as $p) {
             if($p['id'] == $id_scelto) {
                 $_SESSION['carrello'][] = $p;
@@ -34,6 +53,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_piano'])) {
                 exit();
             }
         }
+    } elseif (in_array($id_scelto, $piani_gia_attivi)) {
+        $errore = "Hai già questo abbonamento attivo!";
     } else {
         $errore = "Questo abbonamento è già nel tuo carrello!";
     }
@@ -142,9 +163,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_piano'])) {
             width: 100%; 
         }
 
-        .btn:hover { 
+        .btn:hover:not(:disabled) { 
             transform: scale(1.05); 
             box-shadow: 0 5px 15px rgba(0,123,255,0.4); 
+        }
+
+        /* Stile per il pulsante disabilitato */
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
         }
 
         .btn-nav { 
@@ -185,7 +213,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_piano'])) {
 
             <form method="POST">
                 <input type="hidden" name="id_piano" value="<?php echo $p['id']; ?>">
-                <button type="submit" class="btn">Scegli Abbonamento</button>
+                
+                <?php if (in_array($p['id'], $piani_gia_attivi)): ?>
+                    <button type="button" class="btn" disabled>Attivo</button>
+                <?php else: ?>
+                    <button type="submit" class="btn">Scegli</button>
+                <?php endif; ?>
             </form>
        </div>
     <?php endforeach; ?>

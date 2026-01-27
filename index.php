@@ -17,7 +17,7 @@ $data_oggi = '2026-01-26';
                 font-family: Arial, Helvetica, sans-serif;
             }
 
-            body{
+            body{ 
                 display: flex;   /*Visualizza l'elemento come un contenitore "flessibile" */
                 flex-direction: column;   /*gli elementi della pagina sono disposti uno sotto l'altro (header, content e footer)*/
                 background-color: black;
@@ -48,8 +48,7 @@ $data_oggi = '2026-01-26';
                 border-radius: 10px; 
             }
 
-
-
+  
             /*stile per le voci della barra */
             .horizontal-nav li a{
                 display: block;

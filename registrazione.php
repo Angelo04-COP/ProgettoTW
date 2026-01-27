@@ -99,7 +99,8 @@
 
             .header{
                 text-align: center;
-                margin-bottom: 30px;
+                margin-right: 80px;  
+                max-width: 300px;   
             }
 
             h1{
@@ -121,7 +122,7 @@
                 padding: 80px;
                 width: 100%;
                 border: 1px solid #222;
-
+                border-radius: 10px; 
             }
 
             /*Elementi del form*/

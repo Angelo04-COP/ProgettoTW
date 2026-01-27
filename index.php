@@ -1,4 +1,9 @@
-<?php session_start() ?>
+<?php session_start();
+include'db.php';    //connesione al database ($connect);
+
+//recupero data di oggi per selezionare i film dal database
+$data_oggi = '2026-01-26';
+?>
 <html lang="it">
    <head>
         <title>MyCinema</title>
@@ -251,31 +256,79 @@
         <div class="container">
             <!--Utilizzo il tag main per specificare il contenuto principale della pagina-->
             <main class="content">
-                <h1>Oggi al Cinema</h1>
-                <div class="info-film">
-                    <h1>AVATAR: FUOCO E CENERE</h1>
-                    <p id="description">
-                        "Avatar: Fuoco e Cenere", il terzo film del fenomenale successo della saga di 
-                        "Avatar", viene presentato a Dicembre 2025, in <br> tutto il mondo, esclusivamente al cinema.
-                        James Cameron riporta gli spettatori a Pandora in una nuova coinvolgente <br> avventura 
-                        con il Marine, ora diventato leader dei Na'vi, Jake Sully (Sam Worthington), la guerriera Na'vi, Neytiri (Zoe Saldaña), <br>
-                        e tutta la famiglia Sully.
-                    </p>
+                <!--Visualizzo la data di oggi nel formato giorno/mese/anno-->
+                <h1>Oggi al Cinema (<?php echo date("d/m/Y"); ?>)</h1>  
 
-                    <div class="meta-info">
-                        <p id="cast">Cast:  <span>Zoe Saldana, Sam Worthington, Sigourney Weaver, Stephen Lang, Oona Chaplin</span></p>
-                        <p id = "duration">Durata: <span>3ore 17min</span></p>
-                    </div>
-                </div>
+                <?php
+                //query per selezionare i film in programmazione oggi
+                $query_film = "SELECT DISTINCT f.id, f.titolo, f.descrizione, f.durata_minuti, f.genere, f.regista, f.attori, f.locandina
+                               FROM proiezioni p
+                               JOIN films f ON p.film_id = f.id
+                               WHERE DATE(p.data_orario) = $1";
 
-                <div class = "time-card">
-                    <div id="hours">19:30 - 23:22</div>
-                    <div id="hall">Sala 2</div>
-                    <div id="tech">Proiezione Laser 4K</div>
-                    <div id="price">Da 8,99 €</div>
-                </div>
+                //preparazione della query passando la data di oggi come parametro
+                $result_film = pg_query_params($connect, $query_film, array($data_oggi));
 
+                //controllo se la query è andata a buon fine
+                if(!$result_film){
+                    echo "<p>Errore nel caricamento dei film.</p>";
+                }
 
+                //Ciclo per visualizzare tutti i film in programmazione oggi
+                while($film = pg_fetch_assoc($result_film)){
+                    $film_id = $film['id'];
+                ?>
+
+                <!--Sezione per visualizzare le informazioni dei film-->
+                <div class="film_container" style="margin-bottom: 40px; border-bottom: 1px solid #333; padding-bottom: 20px;">
+                    <div class="info-film">
+
+                        <!-- Mostro la locandina del film -->
+                        <?php if(!empty($film['locandina'])): ?> 
+                            <img src="img/<?php echo $film['locandina']; ?>" alt="Locandina" style="width: 150px; float: left; margin-right: 20px; border-radius: 5px;"/>
+                        <?php endif; ?> 
+                        
+                        <!-- Mostro il titolo del film -->
+                        <h1 style="color: #ff9d00;"><?php echo $film['titolo']; ?></h1>
+                        
+                        <!-- Mostro il genere e la descrizione del film -->
+                        <p id="description">
+                            <strong>Genere:</strong> <?php echo $film['genere']; ?><br>
+                            <?php echo $film['descrizione']; ?>
+                        </p>
+
+                        <!-- Mostro le informazioni aggiuntive del film: regista, cast e durata -->
+                        <div class="meta-info" style="clear: both;">
+                            <p>Regista: <span><?php echo $film['regista']; ?></span></p>
+                            <p>Cast:  <span><?php echo $film['attori']; ?></span></p>
+                            <p>Durata: <span><?php echo $film['durata_minuti']; ?> min</span></p>
+                        </div>
+                    
+
+                    <!--Ottengo gli orari delle proiezioni del film-->
+                    <div class="orari-section" style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 15px;">
+                        <?php
+                        $query_orari="SELECT p.data_orario, s.nome AS nome_sala, p.prezzo
+                                     FROM proiezioni p
+                                     JOIN sale s ON p.sala_id = s.id
+                                     WHERE p.film_id = $1 AND DATE(p.data_orario) = $2
+                                     ORDER BY p.data_orario ASC";
+                        $result_orari = pg_query_params($connect, $query_orari, array($film_id, $data_oggi));
+
+                        while($orario = pg_fetch_assoc($result_orari)){
+                            //formattazione dell'orario per prendere solo ore e minuti
+                            $orario_inizio = date("H:i", strtotime($orario['data_orario']));
+                        ?>
+                            <!--Card per visualizzare orario, sala e prezzo del film-->
+                            <div class = "time-card">
+                                <div id="hours"><?php echo $orario_inizio; ?></div>
+                                <div id="hall"><?php echo $orario['nome_sala']; ?></div>
+                                <div id="price"><?php echo $orario['prezzo']; ?></div>
+                            </div>
+                        <?php } //fine ciclo orari ?>
+                    </div> <!--fine orari-section-->
+                
+                </div> <?php }  //fine ciclo film ?>
             </main>
 
         </div>

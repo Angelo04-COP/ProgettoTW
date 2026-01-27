@@ -68,6 +68,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_piano'])) {
     <title>Abbonamenti MyCinema</title>
     <style>
         /* CSS Integrato */
+
+        /* SELETTORE DI TIPO (ody, h1, p)*/
         body { 
             font-family: 'Segoe UI', Tahoma, sans-serif; 
             background-color: black; 
@@ -75,6 +77,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_piano'])) {
             padding: 40px; 
         }
 
+        
+        /* SELETTORE ID (univoco per elemento) */
+        #main-title {
+            color: #d77c37ff;
+            text-transform: uppercase;
+        }
+
+        /* SELETTORE DI CLASSE */
         .header-nav { 
             display: flex; 
             justify-content: space-between; 
@@ -134,7 +144,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_piano'])) {
             color: #d77c37ff;
         }
 
-        h3 { 
+        /*SELETTORE DISCENDENTE (descendant - spazio tra i due) */
+        .card h3 { 
             margin: 10px 0; 
             color: #1a1a1a; 
             font-size: 20px; 
@@ -168,7 +179,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_piano'])) {
             text-transform: uppercase; 
             width: 100%; 
         }
-
+        
+        /* PSEUDO-CLASSE (stato dell'elemento, es. :hover, :disabled) */
         .btn:hover:not(:disabled) { 
             transform: scale(1.05); 
             box-shadow: 0 5px 15px rgba(0,123,255,0.4); 
@@ -193,7 +205,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_piano'])) {
 <body>
     <div class="header-nav">
         <a href="index.php" class="btn-nav">🏠 Home</a>
-        <h1>Abbonamenti MyCinema</h1>
+        <h1 id="main-title">Abbonamenti MyCinema</h1>
         <a href="carrello.php" class="btn-nav">🛒 Carrello (<?php echo isset($_SESSION['carrello']) ? count($_SESSION['carrello']) : 0; ?>)</a>
     </div>
 

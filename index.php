@@ -235,7 +235,7 @@ $data_oggi = '2026-01-26';
                 <ul class="horizontal-nav">
                     <li><a href="index.php">Home</a></li>
                     <li><a href="#">Programmazione</a></li>
-                    <li><a href="#">Abbonamenti</a></li>
+                    <li><a href="abbonamenti.php">Abbonamenti</a></li>
                     <li><a href="#">Offerte</a></li>
                     <?php 
                         if(isset($_SESSION['username'])){

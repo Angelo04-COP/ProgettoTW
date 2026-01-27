@@ -3,7 +3,7 @@ session_start();
 include('db.php'); // Assicurati che $connect sia definita qui
 
 // Controllo sicurezza: Utente loggato e Carrello non vuoto
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['id'])) {
     header("Location: login.php?msg=necessario_login");
     exit();
 }
@@ -17,7 +17,7 @@ $errore = "";
 
 // Logica di elaborazione al POST
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $id_utente = $_SESSION['user_id'];
+    $id_utente = $_SESSION['id'];
     
     // Inizia una transazione per sicurezza: o si salva tutto o niente
     pg_query($connect, "BEGIN");

@@ -158,7 +158,7 @@ $totale = 0;
                 <div class="testo-totale">Totale: <strong><?php echo number_format($totale, 2, ',', '.'); ?>€</strong></div>
                 <div class="azioni-carrello">
                     <a href="carrello.php?action=svuota" class="btn-svuota">Svuota Carrello</a>
-                    <?php if (isset($_SESSION['user_id'])): ?>
+                    <?php if (isset($_SESSION['id'])): ?>
                         <a href="pagamento.php" class="btn-paga">Procedi al Pagamento</a>
                     <?php else: ?>
                         <p><i>Devi fare il <a href="login.php">login</a> per acquistare.</i></p>

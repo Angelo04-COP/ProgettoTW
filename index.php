@@ -255,7 +255,7 @@
                     <li><a href="bar.php">Bar</a></li>
                     <?php 
                         if(isset($_SESSION['username'])){
-                            echo "<span class=\"user-status\">Benvenuto , <strong>" . $_SESSION['username'] . "</strong></span>";
+                            echo "<span class=\"user-status\">Benvenuto,&nbsp;<strong>" . $_SESSION['username'] . "</strong></span>";
                             echo "<li><a href=\"profilo.php\" class=\"btn-profile\">Profilo</a></li>";
                             echo "<li><a href=\"logout.php\" class=\"btn-logout\">Logout</a></li>";
                         }else{

@@ -1,0 +1,93 @@
+/* abbonamenti.css */
+
+/* SELETTORI DI TIPO (ody, h1, p)*/    
+
+        body { 
+            font-family: Tahoma, sans-serif; 
+            background-color: #000000ff; 
+            margin: 0; 
+            padding: 40px; 
+        }
+
+        h1 {
+            color: white;
+        }
+
+/* SELETTORI DI CLASSE */
+        
+        .container-carrello { 
+            background: #090909ff; 
+            max-width: 500px; 
+            margin: 0 auto; 
+            padding: 40px; 
+            border-radius: 10px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
+            border: 2px solid #d77c37ff; 
+            border-top: 10px solid #d77c37ff; 
+        }
+
+        .form-pagamento { 
+            margin-top: 20px; 
+            text-align: left; 
+        }
+
+        .campo { 
+            margin-bottom: 15px; 
+            display: flex; 
+            flex-direction: column; 
+        }
+
+        .btn-paga { 
+            background-color: #c1782fff; 
+            color: white; 
+            border: none; 
+            padding: 15px; 
+            border-radius: 8px; 
+            font-size: 16px; 
+            font-weight: 600; 
+            cursor: pointer; 
+            width: 100%; 
+            transition: 0.3s; 
+            margin-top: 10px; 
+        }
+
+
+  
+ /* PSEUDO-CLASSE (stato dell'elemento, es. :hover, :disabled) */
+
+        .campo input:focus { 
+            border-color: #cc6322ff; 
+            box-shadow: 0 0 5px rgba(229, 9, 20, 0.2); 
+        }
+    
+        .btn-paga:hover { 
+            background-color: #c1782fff; 
+            transform: translateY(-2px); 
+        }
+
+ /* PSEUDO-ELEMENTO */    
+ 
+        input::placeholder {
+            color: #727272ff;           
+            font-weight: 300;     
+            opacity: 1;          
+        }
+
+/*SELETTORE DISCENDENTI */
+
+        .campo label { 
+            font-size: 14px; 
+            color: #d5d2d2ff; 
+            margin-bottom: 5px; 
+            font-weight: 600; 
+        }
+
+        .campo input { 
+            padding: 12px; 
+            border: 1px solid #9a9898ff; 
+            border-radius: 8px; 
+            font-size: 16px; 
+            outline: none; 
+            transition: 0.3s; 
+            background: #c6b199ff;
+        }

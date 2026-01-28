@@ -206,6 +206,7 @@
             #hours{
                 font-weight: bold;
                 margin-bottom: 5px;
+                color: white;
 
             }
 
@@ -361,7 +362,7 @@
 
         <!-- Footer -->
         <footer>
-            <p> &copy; 2025 MyCinema</p>            
+            <p> &copy; 2026 MyCinema</p>            
         </footer>
 
         <script type = "text/javascript">

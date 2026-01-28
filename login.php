@@ -191,9 +191,35 @@
                     $_SESSION['cognome'] = $user_data['cognome'];
                     $_SESSION['username'] = $user_data['username'];
                     $_SESSION['email'] = $user_data['email'];
-                    }else{
+
+                    //Controllo se l'utente autenticato ha giò attivi i piani aggiunti nel carrello
+                    // Cerco i piani che l'utente ha GIÀ acquistato e sono attivi
+                    $query_check = "SELECT id_piano FROM abbonamenti 
+                    WHERE id_utente = $1 
+                    AND stato = 'attivo' 
+                    AND data_fine >= CURRENT_DATE";
+    
+                    // uso l'ID appena recuperato dal database ($user_data['id'])
+                    $res_check = pg_query_params($connect, $query_check, array($user_data['id']));
+    
+                    if ($res_check) {
+                    $piani_gia_attivi = pg_fetch_all_columns($res_check) ?: [];
+
+                        // Se c'è qualcosa nel carrello (messo da anonimo), filtro
+                        if (isset($_SESSION['carrello']) && !empty($_SESSION['carrello'])) {
+                            foreach ($_SESSION['carrello'] as $key => $item) {
+                            // Se l'abbonamento nel carrello è già tra quelli attivi nel DB, lo togliamo
+                                if (in_array($item['id'], $piani_gia_attivi)) {
+                                  unset($_SESSION['carrello'][$key]);
+                                }
+                            }
+                            // Re-indicizzo l'array per evitare "buchi" nelle chiavi
+                            $_SESSION['carrello'] = array_values($_SESSION['carrello']);
+                        }
+                    }
+                }else{
                     $messaggio = "<p id = 'error-message'> Username o password errati. <a href=\"login.php\">Riprova </a></p>";
-                  }
+                }
                }
             }
         ?>

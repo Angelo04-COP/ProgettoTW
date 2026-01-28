@@ -26,7 +26,7 @@ $totale = 0;
 <head>
     <meta charset="UTF-8">
     <title>Il tuo Carrello - MyCinema</title>
-    <link rel="stylesheet" href="carrello.css">
+    <link rel="stylesheet" href="style_carrello.css">
 </head>
 <body>
     <div class="container-carrello">

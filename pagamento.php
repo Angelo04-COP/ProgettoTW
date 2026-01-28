@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>Pagamento Sicuro - MyCinema</title>
-    <link rel="stylesheet" href="pagamento.css">
+    <link rel="stylesheet" href="style_pagamento.css">
 
 </head>
 <body>

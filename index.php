@@ -87,7 +87,7 @@
 
             .user-status strong{
                 align-items: center;
-                color: #ff9d00;
+                color: black;
 
             }
 

@@ -2,6 +2,58 @@
     session_start();
     include 'db.php';   //connesione al database
 
+    // --- BLOCCO DI GESTIONE AGGIUNTA PRENOTAZIONE AL CARRELLO (per non creare altre pagine dinamiche) ---
+    if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['posti_scelti'])) {
+
+        //controllo se l'utente è loggato (tecnicamente non dovrebbe arrivare qui se non loggato)
+        if(!isset($_SESSION['id'])) {
+            header("Location: login.php");
+            exit();
+        }
+
+        //recupero dati dal form
+        $proiezione_id = $_POST['proiezione_id'];
+        $posti_string = $_POST['posti_scelti'];   //stringa con posti separati da virgola "A-1,B-2,C-3"
+
+        if(!empty($posti_string)) {
+            //recupero informazioni sulla proiezione dal DB
+            $sql="SELECT f.titolo, p.data_orario, p.prezzo
+                  FROM proiezioni p
+                  JOIN films f ON p.film_id = f.id
+                  WHERE p.id = $1";
+            $res = pg_query_params($connect, $sql, array($proiezione_id));
+            $info_film = pg_fetch_assoc($res);
+
+            if($info_film) {
+                //trasformo la stringa dei posti in un array
+                $posti_array = explode(',', $posti_string);     //spezza la stringa in array quando trova la virgola 
+
+                foreach($posti_array as $posto) {
+                    //per ogni posto divido in fila e numero e li metto in 2 arrays separati
+                    list($fila, $numero) = explode('-', $posto);    //spezza il singolo posto (es. A-5) in fila (A) e numero (5)
+
+                    //creo l'array associativo (biglietto) da inserire nel carrello
+                    $biglietto = [
+                        'tipo_item' => 'biglietto',
+                        'id' => $proiezione_id,
+                        'nome' => "🎟️ " . $info_film['titolo'] . " (" . date("d/m/Y H:i", strtotime($info_film['data_orario'])) . ")- Posto $fila-$numero",
+                        'prezzo' => $info_film['prezzo'],
+                        'fila' => $fila,
+                        'numero' => $numero
+                    ];
+
+                    //aggiungo il biglietto al carrello (sessione)
+                    $_SESSION['carrello'][] = $biglietto;       //aggiunge l'array (biglietto) in fondo all'array carrello
+                }
+                
+                //reindirizzo l'utente al carrello
+                header("Location: carrello.php");
+                exit();
+            }
+        }
+    }
+    // --- FINE BLOCCO GESTIONE AGGIUNTA PRENOTAZIONE AL CARRELLO ---
+
     //Controllo id proiezione dal URL
     if(!isset($_GET['id'])) {
         die("Errore: Nessuna proiezione selezionata.");
@@ -188,7 +240,7 @@
             <?php if(!$is_logged): ?>
                 <div style="background: #221111; padding: 15px; border: 1px solid #aa4444; border-radius: 5px; margin-top: 20px;">
                     <p style="color: #ffaaaa; margin: 0; font-weight: bold;"> 🔒 Login Richiesto </p> 
-                    <p style="font-size: 14px; margins: 5px 0 0 0;">Per selezionare i posti devi essere registrato!</p>
+                    <p style="font-size: 14px; margin: 5px 0 0 0;">Per selezionare i posti devi essere registrato!</p>
                     <a href="login.php" class="btn-login">Accedi / Registrati</a>
                 </div>
             <?php endif; ?>
@@ -250,7 +302,7 @@
 
                 <!--Bottone Prenota (disabilitato se non loggato)-->
                 <!--preparazione della form per inviare i dati della prenotazione al carrello-->
-                <form id="booking-form" action="#" method="POST">
+                <form id="booking-form" action="" method="POST">
                     <input type="hidden" name="proiezione_id" value="<?php echo $id_proiezione; ?>">
                     <input type="hidden" name="posti_scelti" id="input-posti">
 

@@ -32,18 +32,35 @@
                     //per ogni posto divido in fila e numero e li metto in 2 arrays separati
                     list($fila, $numero) = explode('-', $posto);    //spezza il singolo posto (es. A-5) in fila (A) e numero (5)
 
-                    //creo l'array associativo (biglietto) da inserire nel carrello
-                    $biglietto = [
-                        'tipo_item' => 'biglietto',
-                        'id' => $proiezione_id,
-                        'nome' => "🎟️ " . $info_film['titolo'] . " (" . date("d/m/Y H:i", strtotime($info_film['data_orario'])) . ")- Posto $fila-$numero",
-                        'prezzo' => $info_film['prezzo'],
-                        'fila' => $fila,
-                        'numero' => $numero
-                    ];
+                    //Controllo per evitare duplicati nel carrello
+                    $gia_presente = false;
+                    if (isset($_SESSION['carrello'])) {
+                        foreach ($_SESSION['carrello'] as $item) {
+                            //in caso nel carrello c'è gia un biglietto identico fermo l'aggiunta
+                            if (isset($item['tipo_item']) && $item['tipo_item'] == 'biglietto' &&
+                                $item['id'] == $proiezione_id &&
+                                $item['fila'] == $fila &&
+                                $item['numero'] == $numero) {
+                                $gia_presente = true;
+                                break;
+                            }
+                        }
+                    }
 
-                    //aggiungo il biglietto al carrello (sessione)
-                    $_SESSION['carrello'][] = $biglietto;       //aggiunge l'array (biglietto) in fondo all'array carrello
+                    //se non è già presente nel carrello il biglietto, lo aggiungo
+                    if (!$gia_presente) {
+                        $biglietto = [
+                            'tipo_item' => 'biglietto',
+                            'id' => $proiezione_id,
+                            'nome' => "🎟️ " . $info_film['titolo'] . " (" . date("d/m/Y H:i", strtotime($info_film['data_orario'])) . ")- Posto $fila-$numero",
+                            'prezzo' => $info_film['prezzo'],
+                            'fila' => $fila,
+                            'numero' => $numero
+                        ];
+
+                        //aggiungo il biglietto al carrello (sessione)
+                        $_SESSION['carrello'][] = $biglietto;       //aggiunge l'array (biglietto) in fondo all'array carrello
+                    }
                 }
                 
                 //reindirizzo l'utente al carrello
@@ -83,6 +100,18 @@
     $posti_occupati = [];
     while ($row = pg_fetch_assoc($res_occupati)) {
         $posti_occupati[] = $row["fila"] . "-" . $row["numero"];
+    }
+
+    //Recupero eventuali posti gia selezionati nel carrello
+    $posti_nel_carrello = [];
+    if (isset($_SESSION['carrello'])) {
+        foreach ($_SESSION['carrello'] as $item) {
+            //scorro il carrello, se trovo biglietti per questa proiezione li aggiungo all'array
+            if (isset($item['tipo_item']) && $item['tipo_item'] == 'biglietto' && $item['id'] == $id_proiezione) {
+                //costruisco la stringa del posto (es. A-5)
+                $posti_nel_carrello[] = $item['fila'] . "-" . $item['numero'];
+            }
+        }
     }
 
     //verifico se l'utente è loggato (controllo se c'è l'ID nella sessione)
@@ -280,13 +309,19 @@
                             //Controllo se il posto è occupato (presente nell'array dei posti occupati nel DB)
                             //in caso di occupato aggiungo la classe 'occupied' (CSS lo rende rosso e non cliccabile)
                             //in caso di libero non aggiungo nulla (CSS lo rende grigio e cliccabile)
-                            $classe_occupato = in_array($id_posto, $posti_occupati) ? ' occupied' : '';
+                            //in caso già selezionato nel carrello aggiungo la classe 'selected' (CSS lo rende verde)
+                            $classe_stato = '';
+                            if (in_array($id_posto, $posti_occupati)) {
+                                $classe_stato = 'occupied';
+                            } elseif (in_array($id_posto, $posti_nel_carrello)) {
+                                $classe_stato = 'selected';
+                            }
 
                             //Stampo il posto in HTML
                             //uso attributi coustum data-fila e data-numero per memorizzare info del posto e funzione JS onclick
                             //quando clicco sul posto viene chiamata la funzione JS 'selezionaPosto(this)' passando l'elemento cliccato
                             //la funzione JS gestisce la selezione/deselezione del posto
-                            echo "<div class='seat $classe_occupato' data-fila = '$nome_fila' data-numero = '$j' onclick='selezionaPosto(this)'> 
+                            echo "<div class='seat $classe_stato' data-fila = '$nome_fila' data-numero = '$j' onclick='selezionaPosto(this)'> 
                                         $nome_fila$j
                                     </div>";  
                         }
@@ -320,10 +355,10 @@
     <script>
         //recupero dati php per uso in JS
         const prezzoBiglietto = <?php echo $info['prezzo']; ?>;
-        const isLogged = <?php echo $is_logged; ?>;
+        const isLogged = <?php echo $is_logged ?>;
 
-        //array per tenere traccia dei posti selezionati
-        let postiSelezionati = [];
+        //array per tenere traccia dei posti selezionati (stato iniziale: posti già selezionati nel carrello)
+        let postiSelezionati = <?php echo json_encode($posti_nel_carrello); ?>;     //trasforma l'array PHP in array JS
 
         //Funzione chiamata quando si clicca su un posto
         function selezionaPosto(elemento) {
@@ -377,6 +412,8 @@
             //i posti sono inviati come stringa separata da virgole "A-1,B-2,C-3"
             document.getElementById('input-posti').value = postiSelezionati.join(',');
         }
+
+        aggiornaTotali();  //chiamo la funzione all'inizio per calcolare subito il totale di eventuali posti già selezionati nel carrello
     </script>
 </body>
 

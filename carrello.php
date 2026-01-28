@@ -2,6 +2,18 @@
 session_start();
 include('db.php');
 
+$link_torna_cinema = "";    //link di ritorno alla pagina per selezionare i posti
+
+if(isset($_SESSION['carrello'])) {
+    foreach ($_SESSION['carrello'] as $item) {
+        if (isset($item['tipo_item']) && $item['tipo_item'] == 'biglietto') {
+            // Costruisco il link di ritorno alla pagina di prenotazione per quella proiezione
+            $link_torna_cinema = "prenotazione.php?id=" . $item['id'];
+            break;  //appena trovo il primo biglietto esco
+        }
+    }
+}
+
 if (isset($_GET['action']) && $_GET['action'] == 'svuota') {
     unset($_SESSION['carrello']);
     header("Location: carrello.php");
@@ -20,6 +32,12 @@ $totale = 0;
     <div class="container-carrello">
         <a href="abbonamenti.php" class="btn-nav">← Torna ai piani</a>
         <a href="bar.php" class="btn-nav">← Torna al bar</a>
+
+        <!-- Se esiste un link di ritorno alla pagina cinema, lo mostro -->
+        <?php if ($link_torna_cinema!=""): ?>
+            <a href="<?php echo $link_torna_cinema; ?>" class="btn-nav">🎟️ Modifica Posti</a>
+        <?php endif; ?>
+
         <h2>Il tuo Carrello</h2>
 
         <?php if (!isset($_SESSION['carrello']) || count($_SESSION['carrello']) == 0): ?>

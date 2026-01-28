@@ -15,28 +15,28 @@
 
                 if(nomeModulo.cognome.value == ""){
                     alert("⚠️ Attenzione! È richiesto un cognome.");
-                    nomeModulo.cognome.focus();
+                    nomeModulo.cognome.focus();   //sposta il focus sul campo per il cognome
                     return false;
 
                 }
 
                 if(nomeModulo.username.value == ""){
                     alert("⚠️ Attenzione! È richiesto un nome utente (username).");
-                    nomeModulo.username.focus();
+                    nomeModulo.username.focus();    //sposta il focus sul campo per il nome utente
                     return false;
 
                 }
 
                 if(nomeModulo.email.value == ""){
                     alert("⚠️ Attenzione! È richiesta un'email.");
-                    nomeModulo.email.focus();
+                    nomeModulo.email.focus();         //sposta il focus sul campo per l'e-mail
                     return false;
 
                 }
 
                 if(nomeModulo.password.value == ""){
                     alert("⚠️ Attenzione! È richiesta una password.");
-                    nomeModulo.password.focus();
+                    nomeModulo.password.focus();     //sposta il focus sul campo per la password
                     return false;
 
                 }else if(!verificaPassword(nomeModulo.password)){
@@ -46,7 +46,7 @@
 
                 if(nomeModulo.repassword.value == ""){
                     alert("⚠️ Attenzione! Devi ripetere la password.");
-                    nomeModulo.repassword.focus();
+                    nomeModulo.repassword.focus();              //sposta il focus sul campo per ripetere la password
                     return false;
 
                 }
@@ -65,7 +65,7 @@
             function verificaPassword(passwordUtente){
                 if(passwordUtente.value.length < 6){
                     alert("⚠️ Attenzione! La password deve contenere almeno 6 caratteri.");
-                    passwordUtente.focus();
+                    passwordUtente.focus();                      
                     passwordUtente.select();
                     return false;
 
@@ -79,16 +79,17 @@
         </script>
 
         <style>
+            /*CSS INTEGRATO*/
             
+            /*SELETTORE PER TIPO*/
             body{
                 display: flex;   /*Visualizza l'elemento come un contenitore "flessibile" */
-                /*gli elementi della pagina sono disposti uno sotto l'altro (header, content e footer)*/
                 background-color: black;
                 justify-content: center;
                 padding: 100px;
             }
 
-
+            /*SELETTORE PER CLASSE*/
             .reg-container{
                 display: flex;             /*Visualizza l'elemento come un contenitore "flessibile" */
                 justify-content: center;  /*centra il div*/
@@ -108,13 +109,12 @@
                 font-size: 40px;
             }
 
+            /*SELETTORE PER ID*/
             #header-par{
                 color: #a3a1a1ff;
                 margin-top: 10px;
 
             }
-
-
 
             /*Box centrale per l'autenticazione*/
             .reg-box{
@@ -152,6 +152,7 @@
 
             }
 
+            /*PSEUDO-CLASSE*/
             #reg-button:hover{
                 background-color: #e68a00;
 
@@ -165,6 +166,7 @@
 
             }
 
+            /*SELETTORE CHILD*/
             p > a{
                 color: #ff9d00;
                 text-decoration: none;
@@ -257,8 +259,6 @@
                     }
 
                 }
-
-
             }
         ?>
 
@@ -386,9 +386,6 @@
             }
 
         }
-
-
-
     }
 
     function insert_utente($nome, $cognome, $user, $email, $pass){
@@ -418,7 +415,5 @@
         }
 
     }
-
-
 
 ?>

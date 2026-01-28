@@ -17,22 +17,28 @@ $totale = 0;
     <style>
         body { 
             font-family: 'Segoe UI', Tahoma, sans-serif; 
-            background-color: #1d1c1cff; 
+            background-color: #000000ff; 
             margin: 0; 
             padding: 40px; 
         }
+        
+        p{
+            color: #f3f3f3ff; 
+        }
 
         .container-carrello { 
-            background: #c0bdbdff; 
+            background: #000000ff; 
             max-width: 800px; 
             margin: 0 auto; 
             padding: 40px; 
             border-radius: 10px; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
+            border: 2px solid #d77c37ff; 
+            border-top: 10px solid #d77c37ff; 
         }
 
         h2 { 
-            color: #0b0b0bff; 
+            color: #f3f3f3ff; 
             margin-bottom: 20px; 
         }
 
@@ -42,14 +48,16 @@ $totale = 0;
             margin-top: 20px; 
         }
 
+
         th { 
             padding: 15px; 
             text-align: left; 
             border-bottom: 2px solid #aeacacff; 
-            color: #0d0d0dff; 
+            color: #d5d1d1ff; 
             font-weight: bold; 
             text-transform: uppercase; 
             font-size: 14px; 
+            background: #333;
         }
 
         td { 
@@ -57,7 +65,7 @@ $totale = 0;
             text-align: left; 
             border-bottom: 1px solid #c7c5c5ff; 
             font-weight: normal; 
-            color: #313030ff; 
+            color: #d9d6d6ff; 
         }
 
         .riepilogo-totale { 
@@ -69,13 +77,13 @@ $totale = 0;
         .testo-totale { 
             font-size: 24px; 
             font-weight: 300; 
-            color: #050505ff; 
+            color: #fffefeff; 
             margin-bottom: 15px; 
         }
 
         .testo-totale strong { 
             font-weight: 600; 
-            color: #000000ff; 
+            color: #fffefeff; 
         }
 
         .azioni-carrello { 
@@ -105,7 +113,7 @@ $totale = 0;
         }
 
         .btn-svuota { 
-            color: #723411ff; 
+            color: #c2642eff; 
             text-decoration: none; 
             font-size: 14px; 
         }

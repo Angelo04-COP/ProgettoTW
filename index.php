@@ -41,7 +41,7 @@ $data_oggi = '2026-01-26';
                 list-style-type: none;
                 margin: 0;
                 padding: 0 20px;
-                background:  #a85f27ff;
+                background:  #b9713aff;
                 width: 100%;  /*allunga la barra su tutta la larghezza*/
                 display: flex; /*rende la barra orizzontale*/
                 justify-content: center; /*centra la barra*/
@@ -94,7 +94,7 @@ $data_oggi = '2026-01-26';
             }
 
             .btn-logout{
-                color: #ff4444 !important; /*Rosso per il logout*/
+                color: #862020ff !important; /*Rosso per il logout*/
                 font-weight: bold;
 
             }

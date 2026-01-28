@@ -105,12 +105,12 @@
 
             h1{
                 color: #ff9d00;
+                font-size: 40px;
             }
 
             #header-par{
-                color: #666;
+                color: #a3a1a1ff;
                 margin-top: 10px;
-
 
             }
 

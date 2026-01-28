@@ -200,6 +200,7 @@
 
 
 
+
             }
 
             #hours{
@@ -271,7 +272,7 @@
             <!--Utilizzo il tag main per specificare il contenuto principale della pagina-->
             <main class="content">
                 <div class="date-selector">
-                    <h1>Film in Programmazione per il <span style="color: #ff9d00;"><?php echo date('d/m/Y', strtotime($data_oggi)); ?></span></h1>
+                    <h1 style="margin-right: 40px; margin-bottom: 0;">Film in Programmazione per il <span style="color: #ff9d00;"><?php echo date('d/m/Y', strtotime($data_oggi)); ?></span></h1>
                     <form method="GET" action="index.php" style="margin:0;">
                         <lable style="color: #ccc; margin-right: 10px;">Seleziona Data:</lable>
                         <!-- ricarica la pagina index.php passando la data selezionata come parametro GET 'data_selezionata' -->

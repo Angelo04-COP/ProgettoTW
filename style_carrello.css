@@ -3,7 +3,7 @@
 /* SELETTORI DI TIPO (ody, h1, p)*/
 
         body { 
-            font-family: 'Segoe UI', Tahoma, sans-serif; 
+            font-family: sans-serif; 
             background-color: #000000ff; 
             margin: 0; 
             padding: 40px; 
@@ -54,7 +54,7 @@
             padding: 40px; 
             border-radius: 10px; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
-            border: 2px solid #d77c37ff; 
+            border: 1px solid #d77c37ff; 
             border-top: 10px solid #d77c37ff; 
         }
 

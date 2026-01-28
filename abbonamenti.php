@@ -81,8 +81,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_piano'])) {
         /* SELETTORE ID (univoco per elemento) */
         #main-title {
             color: #d77c37ff;
-            text-transform: uppercase;
-            
         }
 
         /* SELETTORE DI CLASSE */
@@ -206,7 +204,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_piano'])) {
 <body>
     <div class="header-nav">
         <a href="index.php" class="btn-nav">🏠 Home</a>
-        <h1 id="main-title">Abbonamenti MyCinema</h1>
+        <h1 id="main-title">ABBONAMENTI MyCINEMA</h1>
         <a href="carrello.php" class="btn-nav">🛒 Carrello (<?php echo isset($_SESSION['carrello']) ? count($_SESSION['carrello']) : 0; ?>)</a>
     </div>
 

@@ -10,12 +10,19 @@
     //recupero l'ID dell'utente 
     $user_id = $_SESSION['id'];
 
-    //effettuo una query per recuperare gli abbonamenti attivi dell'utente
-    //si utilizza un JOIN per prendere il nome del piano dalla tabella 'piani'
-    $query_abbonamenti = "SELECT p.nome, a.data_inizio, a.data_fine, a.stato 
+    //effettuo una query per recuperare gli abbonamenti attivi dell'utente, quelli scaduti verranno automaticamente nascosti
+    //si selezionano il nome del piano, la data di inizio e la data di fine:
+    // - FROM indica la tabella principale da cui partire;
+    // - a partire dall'id del piano nell'abbonamento, si trova la riga corrispodndente nella tabella dei piani;
+    // - "WHERE a.id_utente = $1" è un filtro per l'utente loggato;
+    // - "AND a.data_fine >= CURRENT_DATE" è un filtro "automatico": il database confronta la data di scadenza salvata con la data odierna, restituita da CURRENT_DATE 
+    //Se la scadenza è passata (anche solo da un giorno), quella riga viene esclusa dai risultati.
+    // - "ORDER BY a.data_fine DESC" ordina i risultati in modo decrescente: l'abbonamento con la scadenza più lontana nel futuro appare per primo nella lista
+    $query_abbonamenti = "SELECT p.nome, a.data_inizio, a.data_fine 
                           FROM abbonamenti a
                           JOIN piani p ON a.id_piano = p.id
                           WHERE a.id_utente = $1
+                          AND a.data_fine >= CURRENT_DATE
                           ORDER BY a.data_fine DESC";
 
     //creo il prepared statement mediante la funzione pg_prepare: 
@@ -45,6 +52,9 @@
     //- dalla proiezione si risale alla tabella delle sale per sapere in quale sala si deve andare (terzo JOIN)
     //Con "WHERE pre.id_utente = $1" si sta dicendo al database di prendere solo i biglietti che appartengono all'utente
     // loggato: il placeholder $1 verrà sostituito da $_SESSION['id];
+    // - "AND p.data_orario >= NOW()" è un filtro automatico: il database il timestamp del film (cioè Data + Ora, Minuti e Secondi ) 
+    // con il timestamp odierno, restituita dalla funzione NOW() 
+    //Se la scadenza è passata, quella riga viene esclusa dai risultati.
     // Con "ORDER BY p.data_orario ASC" si ordinano i biglietti in ordine cronologico
     $query_biglietti = "SELECT f.titolo, s.nome AS sala, p.data_orario, pre.fila, pre.numero
         FROM prenotazioni pre
@@ -52,6 +62,7 @@
         JOIN films f ON p.film_id = f.id
         JOIN sale s ON p.sala_id = s.id
         WHERE pre.utente_id = $1
+        AND  p.data_orario >= NOW()
         ORDER BY p.data_orario ASC";
 
 
@@ -159,7 +170,7 @@
                         </div>
                         <?php endforeach; ?>
                     <?php else: ?>
-                        <p class="no-subs">Non hai ancora acquistato nessun biglietto.</p>
+                        <p class="no-subs">Non hai biglietti per i prossimi film.</p>
                     <?php endif; ?>
                 </div>
                 <a href="index.php">&larr; Torna alla Home</a>

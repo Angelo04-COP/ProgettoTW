@@ -26,7 +26,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Inserimento per i prodotti del BAR
             $query = "INSERT INTO acquisti_bar (utente_id, prodotto_id, prezzo_pagato) VALUES ($1, $2, $3)";
             $res = pg_query_params($connect, $query, array($id_utente, $item['id'], $item['prezzo']));
-        } else {
+        }
+
+        // Inserimento biglietti del cinema
+        elseif (isset($item['tipo_item']) && $item['tipo_item'] == 'biglietto') {
+            //salvataggio in tabella prenotazioni DB
+            //NOTA: $item['id'] in questo caso si riferisce all'id della prenotazione biglietto
+            $query = "INSERT INTO prenotazioni (proiezione_id, utente_id, fila, numero) VALUES ($1, $2, $3, $4)"; 
+            $res = pg_query_params($connect, $query, array($item['id'], $id_utente, $item['fila'], $item['numero']));
+        }
+        
+        else {
             // Inserimento per gli ABBONAMENTI (Logica originale)
             // Calcolo durata: 30 giorni per i mensili, 365 per il resto
             $durata = (stripos($item['nome'], 'mensile') !== false) ? '30 days' : '365 days';
@@ -58,89 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>Pagamento Sicuro - MyCinema</title>
-    <style>
-        body { 
-            font-family: Tahoma, sans-serif; 
-            background-color: #000000ff; 
-            margin: 0; 
-            padding: 40px; 
-        }
-
-        h1 {
-            color: white;
-        }
-        
-        .container-carrello { 
-            background: #090909ff; 
-            max-width: 500px; 
-            margin: 0 auto; 
-            padding: 40px; 
-            border-radius: 10px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
-            border: 2px solid #d77c37ff; 
-            border-top: 10px solid #d77c37ff; 
-        }
-
-        .form-pagamento { 
-            margin-top: 20px; 
-            text-align: left; 
-        }
-
-        .campo { 
-            margin-bottom: 15px; 
-            display: flex; 
-            flex-direction: column; 
-        }
-
-        .campo label { 
-            font-size: 14px; 
-            color: #d5d2d2ff; 
-            margin-bottom: 5px; 
-            font-weight: 600; 
-        }
-
-        .campo input { 
-            padding: 12px; 
-            border: 1px solid #9a9898ff; 
-            border-radius: 8px; 
-            font-size: 16px; 
-            outline: none; 
-            transition: 0.3s; 
-            background: #c6b199ff;
-        }
-
-        .campo input:focus { 
-            border-color: #cc6322ff; 
-            box-shadow: 0 0 5px rgba(229, 9, 20, 0.2); 
-        }
-
-        input::placeholder {
-            color: #727272ff;           
-            font-weight: 300;     /* Più sottile del testo normale */
-            opacity: 1;           /* Necessario per Firefox */
-        }
-
-        .btn-paga { 
-            background-color: #c1782fff; 
-            color: white; 
-            border: none; 
-            padding: 15px; 
-            border-radius: 8px; 
-            font-size: 16px; 
-            font-weight: 600; 
-            cursor: pointer; 
-            width: 100%; 
-            transition: 0.3s; 
-            margin-top: 10px; 
-        }
-
-        .btn-paga:hover { 
-            background-color: #c1782fff; 
-            transform: translateY(-2px); 
-        }
-        
-    </style>
-
+    <link rel="stylesheet" href="pagamento.css">
 
 </head>
 <body>

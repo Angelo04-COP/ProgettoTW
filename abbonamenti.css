@@ -1,0 +1,140 @@
+/* abbonamenti.css */
+
+/* SELETTORE DI TIPO (ody, h1, p)*/
+
+        body { 
+            font-family: Tahoma, sans-serif; 
+            background-color: black; 
+            margin: 0; 
+            padding: 40px; 
+        }
+   
+/* SELETTORE ID (univoco per elemento) */
+
+        #main-title {
+            color: #d77c37ff;
+        }
+
+/* SELETTORI DI CLASSE */
+
+        .header-nav { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            max-width: 1200px; 
+            margin: 0 auto 40px; 
+            gap: 20px;
+        }
+
+        .container { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 25px; 
+            max-width: 1200px; 
+            margin: 0 auto; 
+        }
+
+        .card { 
+            background: #000000ff; 
+            border-radius: 4px; 
+            padding: 25px; 
+            text-align: center; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
+            transition: all 0.3s ease; 
+            border: 1px solid #d77c37ff; 
+            border-top: 8px solid #ca7534ff; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: space-between; 
+        }
+
+        .badge-premium { 
+            background: #ca9a34ff; 
+            color: white; 
+            font-size: 11px; 
+            font-weight: bold; 
+            padding: 4px 12px; 
+            display: inline-block; 
+            margin-bottom: 10px; 
+        }
+
+        h1 {
+            color: #d77c37ff;
+        }
+
+
+        .price { 
+            font-size: 24px; 
+            font-weight: bold; 
+            color: #bf7238ff; 
+            margin: 15px 0; 
+            margin-bottom: 20px;
+        }
+
+        .desc { 
+            font-size: 14px; 
+            color: #d6d3d3ff; 
+            margin-bottom: 20px; 
+            min-height: 45px; 
+        }
+
+        .btn { 
+            background: #c9702cff;
+            color: white; 
+            border: none; 
+            padding: 12px; 
+            border-radius: 15px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            transition: 0.3s; 
+            text-transform: uppercase; 
+            width: 100%; 
+        }
+        
+        .btn-nav { 
+            text-decoration: none; 
+            background: #333; 
+            color: white; 
+            padding: 10px 20px; 
+            border-radius: 8px; 
+        }
+
+        /*SELETTORE DISCENDENTE */
+        
+        .card h3 { 
+            margin: 10px 0; 
+            color: #aca8a8ff; 
+            font-size: 23px; 
+            font-family: sans-serif;
+            font-weight: 600;
+        }
+
+        /* SELETTORE COMPOSTO */
+
+        .card.premium { 
+            border-top: 5px solid #ca7534ff; 
+            border-left: 1px solid #ca7534ff; 
+            border-right: 1px solid #ca7534ff; 
+            border-bottom: 1px solid #ca7534ff; 
+        }
+
+        /* PSEUDO-CLASSI (stato dell'elemento, es. :hover, :disabled) */
+
+        .card:hover { 
+            transform: translateY(-10px); 
+            border-top-width: 8px; 
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1); 
+        }
+
+        .btn:hover:not(:disabled) { 
+            transform: scale(1.05); 
+            box-shadow: 0 5px 15px rgba(0,123,255,0.4); 
+        }
+
+        .btn:disabled {
+            background: #b6a79bff;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+  

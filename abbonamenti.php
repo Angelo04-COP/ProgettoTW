@@ -68,13 +68,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_piano'])) {
     <title>Abbonamenti MyCinema</title>
     <style>
         /* CSS Integrato */
+
+        /* SELETTORE DI TIPO (ody, h1, p)*/
         body { 
-            font-family: 'Segoe UI', Tahoma, sans-serif; 
+            font-family: Tahoma, sans-serif; 
             background-color: black; 
             margin: 0; 
             padding: 40px; 
         }
 
+        
+        /* SELETTORE ID (univoco per elemento) */
+        #main-title {
+            color: #d77c37ff;
+            text-transform: uppercase;
+            
+        }
+
+        /* SELETTORE DI CLASSE */
         .header-nav { 
             display: flex; 
             justify-content: space-between; 
@@ -93,14 +104,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_piano'])) {
         }
 
         .card { 
-            background: #dec6b1ff; 
-            border-radius: 15px; 
+            background: #000000ff; 
+            border-radius: 4px; 
             padding: 25px; 
             text-align: center; 
             box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
             transition: all 0.3s ease; 
             border: 1px solid #d77c37ff; 
-            border-top: 8px solid #d77c37ff; 
+            border-top: 8px solid #ca7534ff; 
             display: flex; 
             flex-direction: column; 
             justify-content: space-between; 
@@ -113,19 +124,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_piano'])) {
         }
 
         .card.premium { 
-            border-top: 5px solid #d4af37; 
-            border-left: 1px solid #d4af37; 
-            border-right: 1px solid #d4af37; 
-            border-bottom: 1px solid #d4af37; 
+            border-top: 5px solid #ca7534ff; 
+            border-left: 1px solid #ca7534ff; 
+            border-right: 1px solid #ca7534ff; 
+            border-bottom: 1px solid #ca7534ff; 
         }
 
         .badge-premium { 
-            background: #d4af37; 
+            background: #ca9a34ff; 
             color: white; 
             font-size: 11px; 
             font-weight: bold; 
             padding: 4px 12px; 
-            border-radius: 20px; 
             display: inline-block; 
             margin-bottom: 10px; 
         }
@@ -134,48 +144,51 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_piano'])) {
             color: #d77c37ff;
         }
 
-        h3 { 
+        /*SELETTORE DISCENDENTE */
+        .card h3 { 
             margin: 10px 0; 
-            color: #1a1a1a; 
-            font-size: 20px; 
+            color: #aca8a8ff; 
+            font-size: 23px; 
+            font-family: sans-serif;
             font-weight: 600;
         }
 
         .price { 
             font-size: 24px; 
             font-weight: bold; 
-            color: #6c3902ff; 
+            color: #bf7238ff; 
             margin: 15px 0; 
             margin-bottom: 20px;
         }
 
         .desc { 
             font-size: 14px; 
-            color: #050505ff; 
+            color: #d6d3d3ff; 
             margin-bottom: 20px; 
             min-height: 45px; 
         }
 
         .btn { 
-            background: #c57131ff;
+            background: #c9702cff;
             color: white; 
             border: none; 
             padding: 12px; 
-            border-radius: 25px; 
+            border-radius: 15px; 
             font-weight: bold; 
             cursor: pointer; 
             transition: 0.3s; 
             text-transform: uppercase; 
             width: 100%; 
         }
-
+        
+        /* PSEUDO-CLASSE (stato dell'elemento, es. :hover, :disabled) */
         .btn:hover:not(:disabled) { 
             transform: scale(1.05); 
             box-shadow: 0 5px 15px rgba(0,123,255,0.4); 
         }
 
         .btn:disabled {
-            background: #ce9261ff;
+            background: #b6a79bff;
             cursor: not-allowed;
             transform: none;
         }
@@ -193,7 +206,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_piano'])) {
 <body>
     <div class="header-nav">
         <a href="index.php" class="btn-nav">🏠 Home</a>
-        <h1>Abbonamenti MyCinema</h1>
+        <h1 id="main-title">Abbonamenti MyCinema</h1>
         <a href="carrello.php" class="btn-nav">🛒 Carrello (<?php echo isset($_SESSION['carrello']) ? count($_SESSION['carrello']) : 0; ?>)</a>
     </div>
 

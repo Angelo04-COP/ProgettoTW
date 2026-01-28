@@ -65,15 +65,17 @@
 
             .header{
                 text-align: center;
-                margin-bottom: 30px;
+                margin-right: 80px;   /* Crea lo spazio tra MyCinema e il box di login */
+                max-width: 300px;     /* Evita che il testo si allarghi troppo */
             }
 
             h1{
                 color: #ff9d00;
+                font-size: 40px;
             }
 
             #header-par{
-                color: #666;
+                color: #b8b7b7ff;
                 margin-top: 10px;
             }
 
@@ -83,13 +85,13 @@
                 padding: 80px;
                 width: 100%;
                 border: 1px solid #222;
+                border-radius: 10px; 
             }
 
             /*Elementi del form*/
             .input-group{
                 margin-bottom: 20px;
                 margin-right: 50px;
-
             }
             
             input{
@@ -98,6 +100,7 @@
                 border: 1px solid #333;
                 width: 100%;
                 padding: 20px;
+                border-radius: 5px; 
             
             }
 
@@ -108,20 +111,19 @@
                 width: 100px;
                 font-weight: bold;
                 cursor: pointer;
-
-
+                
             }
 
             #auth-button:hover{
                 background-color: #e68a00;
-
+                transform: scale(1.05); 
 
             }
 
             p{
                 margin-top: 25px;
                 text-align: center;
-                color: #888;
+                color: #b8b7b7ff;
 
             }
 

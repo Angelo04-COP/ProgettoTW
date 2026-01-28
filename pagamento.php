@@ -60,19 +60,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>Pagamento Sicuro - MyCinema</title>
     <style>
         body { 
-            font-family: 'Segoe UI', Tahoma, sans-serif; 
-            background-color: #f0f2f5; 
+            font-family: Tahoma, sans-serif; 
+            background-color: #000000ff; 
             margin: 0; 
             padding: 40px; 
         }
 
+        h1 {
+            color: white;
+        }
+        
         .container-carrello { 
-            background: white; 
+            background: #090909ff; 
             max-width: 500px; 
             margin: 0 auto; 
             padding: 40px; 
-            border-radius: 20px; 
+            border-radius: 10px; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
+            border: 2px solid #d77c37ff; 
+            border-top: 10px solid #d77c37ff; 
         }
 
         .form-pagamento { 
@@ -88,27 +94,34 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         .campo label { 
             font-size: 14px; 
-            color: #555; 
+            color: #d5d2d2ff; 
             margin-bottom: 5px; 
             font-weight: 600; 
         }
 
         .campo input { 
             padding: 12px; 
-            border: 1px solid #ddd; 
+            border: 1px solid #9a9898ff; 
             border-radius: 8px; 
             font-size: 16px; 
             outline: none; 
             transition: 0.3s; 
+            background: #c6b199ff;
         }
 
         .campo input:focus { 
-            border-color: #E50914; 
+            border-color: #cc6322ff; 
             box-shadow: 0 0 5px rgba(229, 9, 20, 0.2); 
         }
 
+        input::placeholder {
+            color: #727272ff;           
+            font-weight: 300;     /* Più sottile del testo normale */
+            opacity: 1;           /* Necessario per Firefox */
+        }
+
         .btn-paga { 
-            background-color: #28a745; 
+            background-color: #c1782fff; 
             color: white; 
             border: none; 
             padding: 15px; 
@@ -122,54 +135,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         .btn-paga:hover { 
-            background-color: #218838; 
+            background-color: #c1782fff; 
             transform: translateY(-2px); 
         }
         
     </style>
 
-    <script type="text/javascript">
-        function validaPagamento(f) {
-            // Controllo Titolare
-            var haNumeri = /\d/.test(f.titolare.value);
-            if (f.titolare.value.trim() === "" || haNumeri) {
-                alert("⚠️ Titolare non valido: il campo non può essere vuoto e non può contenere numeri.");
-                f.titolare.focus();
-                return false;
-            }
 
-            // Controllo Numero Carta (solo cifre, lunghezza 16)
-            var numCarta = f.numero_carta.value.replace(/\s/g, ''); // Rimuove eventuali spazi
-            if (numCarta.length !== 16 || isNaN(numCarta)) {
-                alert("⚠️ Il numero della carta deve essere composto da 16 cifre.");
-                f.numero_carta.focus();
-                return false;
-            }
-
-            // Controllo Scadenza (Formato MM/AA semplice)
-            if (f.scadenza.value.length < 5 || !f.scadenza.value.includes('/')) {
-                alert("⚠️ Inserisci la scadenza nel formato MM/AA.");
-                f.scadenza.focus();
-                return false;
-            }
-
-            // Controllo CVV (3 cifre)
-            if (f.cvv.value.length !== 3 || isNaN(f.cvv.value)) {
-                alert("⚠️ Il codice CVV deve essere di 3 cifre.");
-                f.cvv.focus();
-                return false;
-            }
-
-            return true; 
-            // Se tutto è corretto, il modulo viene inviato al PHP
-        }
-    </script>
 </head>
 <body>
     <div class="container-carrello">
         <header style="text-align: center; margin-bottom: 30px;">
             <h1>Pagamento 💳</h1>
-            <p style="color: #666;">Inserisci i dati della tua carta</p>
+            <p style="color: #a8a8a8ff;">Inserisci i dati della tua carta</p>
             <?php if($errore): ?>
                 <p style="color: red; font-weight: bold;"><?php echo $errore; ?></p>
             <?php endif; ?>
@@ -200,12 +178,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <button type="submit" class="btn-paga">Conferma e Paga Ora</button>
 
             <div style="text-align: center; margin-top: 15px;">
-                <a href="carrello.php" style="color: #444; text-decoration: underline; font-size: 14px;">
+                <a href="carrello.php" style="color: #d9d8d8ff; text-decoration: underline; font-size: 14px;">
                     ← Modifica ordine (Torna al carrello)
                 </a>
             </div>
         </form>
-        <p style="text-align: center; margin-top: 20px; font-size: 12px; color: #888;">🔒 Pagamento criptato e sicuro</p>
+        <p style="text-align: center; margin-top: 20px; font-size: 12px; color: #a7a7a7ff;">🔒 Pagamento criptato e sicuro</p>
     </div>
+    <script src="validazione_pagamento.js"></script>
 </body>
 </html>

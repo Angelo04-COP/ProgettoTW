@@ -99,17 +99,18 @@
 
             .header{
                 text-align: center;
-                margin-bottom: 30px;
+                margin-right: 80px;  
+                max-width: 300px;   
             }
 
             h1{
                 color: #ff9d00;
+                font-size: 40px;
             }
 
             #header-par{
-                color: #666;
+                color: #a3a1a1ff;
                 margin-top: 10px;
-
 
             }
 
@@ -121,7 +122,7 @@
                 padding: 80px;
                 width: 100%;
                 border: 1px solid #222;
-
+                border-radius: 10px; 
             }
 
             /*Elementi del form*/

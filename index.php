@@ -1,8 +1,12 @@
 <?php session_start();
-include'db.php';    //connesione al database ($connect);
+    include'db.php';    //connesione al database ($connect);
 
-//recupero data di oggi per selezionare i film dal database
-$data_oggi = '2026-01-26';
+    //Gestione data dinamica
+    if(isset($_GET['data_selezionata'])){
+        $data_oggi = $_GET['data_selezionata'];
+    } else {
+        $data_oggi = '2026-01-26';  //data fissa per test (26 gennaio 2026)
+    }
 ?>
 <html lang="it">
    <head>
@@ -116,6 +120,27 @@ $data_oggi = '2026-01-26';
                 margin-bottom: 40px;
                 padding: 20px;
 
+            }
+
+            .date-selector{
+                background-color: #111;
+                padding: 20px;
+                border-bottom: 1px solid #333;
+                border-radius: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 20px;
+            }
+
+            .date-selector h1 {margin:0; font-size: 24px; color: white; }
+            .date-selector input[type="date"] {
+                padding: 10px;
+                border-radius: 5px;
+                border: 1px solid #ff9d00;
+                background-color: #222;
+                color: white;
+                cursor: pointer;
             }
 
             .info-film {
@@ -245,8 +270,14 @@ $data_oggi = '2026-01-26';
         <div class="container">
             <!--Utilizzo il tag main per specificare il contenuto principale della pagina-->
             <main class="content">
-                <!--Visualizzo la data di oggi nel formato giorno/mese/anno-->
-                <h1>Oggi al Cinema (<?php echo date("d/m/Y"); ?>)</h1>  
+                <div class="date-selector">
+                    <h1>Film in Programmazione per il <span style="color: #ff9d00;"><?php echo date('d/m/Y', strtotime($data_oggi)); ?></span></h1>
+                    <form method="GET" action="index.php" style="margin:0;">
+                        <lable style="color: #ccc; margin-right: 10px;">Seleziona Data:</lable>
+                        <!-- ricarica la pagina index.php passando la data selezionata come parametro GET 'data_selezionata' -->
+                        <input type="date" name="data_selezionata" value="<?php echo $data_oggi; ?>" onchange="this.form.submit()" />
+                    </form> 
+                </div> 
 
                 <?php
                 //query per selezionare i film in programmazione oggi
@@ -258,9 +289,12 @@ $data_oggi = '2026-01-26';
                 //preparazione della query passando la data di oggi come parametro
                 $result_film = pg_query_params($connect, $query_film, array($data_oggi));
 
-                //controllo se la query è andata a buon fine
-                if(!$result_film){
-                    echo "<p>Errore nel caricamento dei film.</p>";
+                //controllo se ci sono film in programmazione per la data selezionata
+                if(pg_num_rows($result_film) == 0){
+                    echo "<div style='text-align-:center; padding: 50px; color: #666;'>
+                            <h2>🚫 Nessuno spettacolo previsto per questa data.</h2>
+                            <p>Ti invitiamo a selezionare un'altra data.</p>
+                          </div>";
                 }
 
                 //Ciclo per visualizzare tutti i film in programmazione oggi

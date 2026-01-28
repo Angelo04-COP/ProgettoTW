@@ -26,7 +26,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Inserimento per i prodotti del BAR
             $query = "INSERT INTO acquisti_bar (utente_id, prodotto_id, prezzo_pagato) VALUES ($1, $2, $3)";
             $res = pg_query_params($connect, $query, array($id_utente, $item['id'], $item['prezzo']));
-        } else {
+        }
+
+        // Inserimento biglietti del cinema
+        elseif (isset($item['tipo_item']) && $item['tipo_item'] == 'biglietto') {
+            //salvataggio in tabella prenotazioni DB
+            //NOTA: $item['id'] in questo caso si riferisce all'id della prenotazione biglietto
+            $query = "INSERT INTO prenotazioni (proiezione_id, utente_id, fila, numero) VALUES ($1, $2, $3, $4)"; 
+            $res = pg_query_params($connect, $query, array($item['id'], $id_utente, $item['fila'], $item['numero']));
+        }
+        
+        else {
             // Inserimento per gli ABBONAMENTI (Logica originale)
             // Calcolo durata: 30 giorni per i mensili, 365 per il resto
             $durata = (stripos($item['nome'], 'mensile') !== false) ? '30 days' : '365 days';

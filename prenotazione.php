@@ -188,7 +188,7 @@
             <?php if(!$is_logged): ?>
                 <div style="background: #221111; padding: 15px; border: 1px solid #aa4444; border-radius: 5px; margin-top: 20px;">
                     <p style="color: #ffaaaa; margin: 0; font-weight: bold;"> 🔒 Login Richiesto </p> 
-                    <p style="font-size: 14px; margins: 5px 0 0 0;">Per selezionare i posti devi essere registrato!</p>
+                    <p style="font-size: 14px; margin: 5px 0 0 0;">Per selezionare i posti devi essere registrato!</p>
                     <a href="login.php" class="btn-login">Accedi / Registrati</a>
                 </div>
             <?php endif; ?>

@@ -12,9 +12,9 @@ body{
     display: flex;              /*Visualizza l'elemento come un contenitore "flessibile" */
     background-color: #111;     /*colore di sfondo del body*/
     justify-content: center;
-    align-items: center;
-    min-height: 100px;
-    padding: 90px;
+    align-items: flex-start;   /*allinea al top*/
+    min-height: 100vh;         /*occupa almeno tutta l'altezza dello schermo*/
+    padding: 40 20px;          /*padding verticale di 40px, padding orizzontale di 20px*/
     color: white;
 
 
@@ -90,20 +90,24 @@ p{
     padding: 15px;
     border-radius: 8px;
     margin-bottom: 15px;
-    border-left: 4px solid #00c851 /*Verde per indicare che è attivo*/
+    border-left: 5px solid #ff9d00;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
 }
 
 .sub_name{
     color: #ff9d00;
     font-weight: bold;
-    font-size: 1.1em;
+    font-size: 16px;  /*dimensione del font-size dipendente da quella dell'elemento genitore*/
     display: block;
-    margin-bottom: 5px;
+    margin: 0;
 }
 
 .sub-dates{
     font-size: 0.9em;
-    color: #bbb;
+    color: #ccc;
 }
 
 .no-subs{
@@ -111,6 +115,58 @@ p{
     font-style: italic;
     margin-top: 10px;
 }
+
+.tickets-sec{
+    margin-top: 40px;
+    border-top: 2px dashed #333;
+    padding-top: 20px;
+
+}
+
+.ticket-card{
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-left: 5px solid #ff9d00;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+}
+
+.ticket-info h4{
+    color: #ff9d00;
+    margin-bottom: 5px;
+    font-size: 16px;
+}
+
+.ticket-details{
+    font-size: 13px;
+    color: #ccc;
+    line-height: 1.4;
+
+}
+
+.status-badge{
+    font-size: 12px;
+    padding: 5px 12px;
+    border-radius: 4px;
+    font-weight: bold;
+    text-transform: uppercase;
+
+}
+
+.status-active{
+    background: #28a745; color: white;
+}
+
+.status-expired{
+    background: #555; color: #aaa 
+
+}
+
 
 a{
     color: #ff9d00;

@@ -19,7 +19,7 @@
 
         .horizontal-nav li a {
             display: block;
-            color: white;
+            color: #000000ff;
             padding: 20px;
             text-decoration: none;
         }

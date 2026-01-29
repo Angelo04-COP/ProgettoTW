@@ -48,7 +48,7 @@
             if(!empty($pass)){
                 //controllo se l'utente già esiste
                 if(username_exist($user)){
-                   $messaggio = "<p id='error-message'> L'username $user già esiste. Riprova<p>";
+                   $messaggio = "<p id='error-message'> L'username $user già esiste. <a href=\"registrazione.php\">Riprova</a><p>";
 
                 }else{
                     //se non esiste, inserisco il nuovo utente nel database e ottengo il relativo ID
@@ -57,7 +57,7 @@
                        $messaggio = "<p id='success-message'> Utente registrato con successo. Effettua il <a href=\"login.php\">login</a> oppure ritorna alla Home</p>";
 
                     }else{
-                        $messaggio = "<p id='error-message'> Si è verificato un errore durante la registrazione. Riprova <p>";
+                        $messaggio = "<p id='error-message'> Si è verificato un errore durante la registrazione. <a href=\"registrazione.php\">Riprova </a><p>";
                     }
 
                 }

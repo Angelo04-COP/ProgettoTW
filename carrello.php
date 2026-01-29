@@ -47,7 +47,7 @@ $totale = 0;
             <table>
                 <thead>
                     <tr>
-                        <th>Abbonamento</th>
+                        <th>Prodotto</th>
                         <th>Prezzo</th>
                     </tr>
                 </thead>

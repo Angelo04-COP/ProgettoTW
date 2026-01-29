@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('db.php'); // connessione al database gruppo15 
+include('db.php'); // connessione al database  
 
 // Recupero dei piani dal database 
 $query = "SELECT id, nome, prezzo, descrizione AS desc FROM piani ORDER BY id ASC";
@@ -10,12 +10,12 @@ $piani = pg_fetch_all($result);
 // Se il database è vuoto, inizializzio un array vuoto 
 if (!$piani) { $piani = []; }
 
-// Controllo piani già attivi nel DB ---
+// Controllo piani già attivi nel DB 
 $id_utente = $_SESSION['id'] ?? null;
 $piani_gia_attivi = [];
 
 if ($id_utente) {
-    // Cerchiamo gli ID dei piani che l'utente ha già acquistato e sono ancora attivi
+    // Cerco gli ID dei piani che l'utente ha già acquistato e sono ancora attivi
     $query_check = "SELECT id_piano FROM abbonamenti 
                     WHERE id_utente = $1 
                     AND stato = 'attivo' 

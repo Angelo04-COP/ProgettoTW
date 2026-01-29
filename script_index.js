@@ -37,7 +37,7 @@ function handleClick(e){
     //recupero il valore dell'attributo href dell'elemento HTML che ha ricevuto l'evento (ossia il tag <a> con href='logout.php')
     var infoUrl = this.href;
 
-    //il cursore diventa una rotellina
+    //il cursore diventa una clessidra
     document.body.style.cursor = "wait";
 
     //feedback visivo (il testo del link cambia da logout a "Chiusura sessione .....")

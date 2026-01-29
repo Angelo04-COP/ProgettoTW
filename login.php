@@ -7,8 +7,7 @@
         <title>MyCinema : ACCEDI</title>
         <meta charset="utf-8">
 
-        <script type="text/javascript" src="validazione_login.js" defer ></script>
-
+        <script type="text/javascript" src="validazione_login.js" defer></script>
         <link rel="stylesheet" type="text/css" href="style_login.css" />
 
 
@@ -34,13 +33,13 @@
 
               }else{
                 if(password_verify($pass, $user_data['password'])){
-                    $messaggio = "<p id = 'success-message' > Login effettuato con successo. Ritorna alla Home </p>";
                     //salvo nella sessione corrente i dati dell'utente
                     $_SESSION['id'] = $user_data['id'];
                     $_SESSION['nome'] = $user_data['nome'];
                     $_SESSION['cognome'] = $user_data['cognome'];
                     $_SESSION['username'] = $user_data['username'];
                     $_SESSION['email'] = $user_data['email'];
+
 
                     //Controllo se l'utente autenticato ha giò attivi i piani aggiunti nel carrello
                     // Cerco i piani che l'utente ha GIÀ acquistato e sono attivi
@@ -67,6 +66,9 @@
                             $_SESSION['carrello'] = array_values($_SESSION['carrello']);
                         }
                     }
+                    header("Location: index.php");
+                    exit();
+
                 }else{
                     $messaggio = "<p id = 'error-message'> Username o password errati. <a href=\"login.php\">Riprova </a></p>";
                 }

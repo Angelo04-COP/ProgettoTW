@@ -54,8 +54,8 @@
             padding: 40px; 
             border-radius: 10px; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
-            border: 1px solid #d77c37ff; 
-            border-top: 10px solid #d77c37ff; 
+            border: 1px solid rgb(226, 149, 41);
+            border-top: 10px solid rgb(226, 149, 41);; 
         }
 
         .riepilogo-totale { 
@@ -81,7 +81,7 @@
         }
 
         .btn-paga { 
-            background-color: #c1782fff; 
+            background-color: rgb(226, 149, 41); 
             color: black; 
             border: none; 
             padding: 10px 25px; 
@@ -103,7 +103,7 @@
         }
 
         .btn-svuota { 
-            color: #c2642eff; 
+            color: rgb(226, 149, 41);
             text-decoration: none; 
             font-size: 14px; 
         }
@@ -118,7 +118,7 @@
  /* PSEUDO-CLASSI (stato dell'elemento, es. :hover, :disabled) */
         
         .btn-paga:hover { 
-            background-color: #c1782fff; 
+            background-color: rgb(226, 149, 41);
             transform: translateY(-2px); 
             box-shadow: 0 4px 10px rgba(40,167,69,0.2); 
         }

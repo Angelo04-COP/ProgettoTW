@@ -26,10 +26,11 @@ $totale = 0;
 <head>
     <meta charset="UTF-8">
     <title>Il tuo Carrello - MyCinema</title>
-    <link rel="stylesheet" href="style_carrello.css?v=1.1">
+    <link rel="stylesheet" href="style_carrello.css">
 </head>
 <body>
     <div class="container-carrello">
+        <a href="index.php" class="btn-nav">🏠 Home</a>
         <a href="abbonamenti.php" class="btn-nav">← Torna ai piani</a>
         <a href="bar.php" class="btn-nav">← Torna al bar</a>
 

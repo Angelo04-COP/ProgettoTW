@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_piano'])) {
 <head>
     <meta charset="UTF-8">
     <title>Abbonamenti MyCinema</title>
-    <link rel="stylesheet" type="text/css" href="style_abbonamenti.css?v=1.1" />
+    <link rel="stylesheet" type="text/css" href="style_abbonamenti.css" />
 </head>
 <body>
     <div class="header-nav">

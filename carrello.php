@@ -4,6 +4,24 @@ include('db.php');
 
 $link_torna_cinema = "";    //link di ritorno alla pagina per selezionare i posti
 
+// Logica per rimuovere un singolo elemento dal carrello
+if (isset($_GET['action']) && $_GET['action'] == 'rimuovi' && isset($_GET['id'])) {
+    $id_da_rimuovere = (int)$_GET['id'];
+    if (isset($_SESSION['carrello'][$id_da_rimuovere])) {
+        // Rimuove l'elemento all'indice specificato
+        array_splice($_SESSION['carrello'], $id_da_rimuovere, 1);
+    }
+    header("Location: carrello.php");
+    exit();
+}
+
+// Logica per svuotare il carrello
+if (isset($_GET['action']) && $_GET['action'] == 'svuota') {
+    unset($_SESSION['carrello']);
+    header("Location: carrello.php");
+    exit();
+}
+
 if(isset($_SESSION['carrello'])) {
     foreach ($_SESSION['carrello'] as $item) {
         if (isset($item['tipo_item']) && $item['tipo_item'] == 'biglietto') {
@@ -14,11 +32,6 @@ if(isset($_SESSION['carrello'])) {
     }
 }
 
-if (isset($_GET['action']) && $_GET['action'] == 'svuota') {
-    unset($_SESSION['carrello']);
-    header("Location: carrello.php");
-    exit();
-}
 $totale = 0;
 ?>
 <!DOCTYPE html>
@@ -26,7 +39,7 @@ $totale = 0;
 <head>
     <meta charset="UTF-8">
     <title>Il tuo Carrello - MyCinema</title>
-    <link rel="stylesheet" href="style_carrello.css?v=1.3">
+    <link rel="stylesheet" href="style_carrello.css?v=1.4">
 </head>
 <body>
     <div class="container-carrello">
@@ -49,15 +62,25 @@ $totale = 0;
                     <tr>
                         <th>Prodotto</th>
                         <th>Prezzo</th>
+                        <th></th>
+
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($_SESSION['carrello'] as $item): 
+                    <?php foreach ($_SESSION['carrello'] as $index => $item): 
                         $totale += $item['prezzo'];
                     ?>
                     <tr>
                         <td><?php echo htmlspecialchars($item['nome']); ?></td>
                         <td><?php echo number_format($item['prezzo'], 2, ',', '.'); ?>€</td>
+                        <td style="text-align: center;">
+                            <a href="carrello.php?action=rimuovi&id=<?php echo $index; ?>" 
+                               class="btn-svuota" 
+                               title="Rimuovi prodotto"
+                               onclick="return confirm('Vuoi rimuovere questo elemento?')">
+                                Rimuovi
+                            </a>
+                        </td>
                     </tr>
                     <?php endforeach; ?>
                 </tbody>

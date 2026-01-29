@@ -76,7 +76,7 @@ input{
     background-color: #ff9d00;
     color: black;
     padding: 15px;
-    width: 100px;
+    min-width: 150px;
     font-weight: bold;
     cursor: pointer;
 }

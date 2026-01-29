@@ -22,8 +22,8 @@
                           FROM abbonamenti a
                           JOIN piani p ON a.id_piano = p.id
                           WHERE a.id_utente = $1
-                          AND a.data_fine >= CURRENT_DATE
                           ORDER BY a.data_fine DESC";
+
 
     //creo il prepared statement mediante la funzione pg_prepare: 
         //primo parametro --> la risorsa connection al database
@@ -44,6 +44,20 @@
         $abbonamenti = [];
     }
 
+    //creo un array per gli abbonamenti attivi e un array per gli abbonamenti scaduti
+    $abbonamenti_attivi = [];
+    $abbonamenti_scaduti = [];
+    foreach($abbonamenti as $sub){
+        //se un abbonamento non è scaduto, lo aggiungo all'array di abbonamenti attivi
+        //controllo temporale: se la data di fine dell'abbonamento è maggiore di "adesso", allora è attivo
+        if(strtotime($sub['data_fine']) >= time()){
+            $abbonamenti_attivi[] = $sub;      
+        }else{
+            //altrimenti lo aggiungo all'array di abbonamenti scaduti
+            $abbonamenti_scaduti[] = $sub;
+        }
+    }
+
     //effettuo una query per recuperare i biglietti attivi dell'utente
     //si utilizza un JOIN per unire le tabelle films, sale, proiezioni e prenotazioni
     //si parte dalla tabella prenotazioni e poi:
@@ -62,9 +76,7 @@
         JOIN films f ON p.film_id = f.id
         JOIN sale s ON p.sala_id = s.id
         WHERE pre.utente_id = $1
-        AND  p.data_orario >= NOW()
         ORDER BY p.data_orario ASC";
-
 
 //creo il prepared statement mediante la funzione pg_prepare: 
         //primo parametro --> la risorsa connection al database
@@ -86,6 +98,21 @@
     if(!$biglietti){
         $biglietti = [];
     }
+
+    //creo un array per i biglietti attivi e un array per i biglietti scaduti
+    $biglietti_attivi = [];
+    $biglietti_scaduti = [];
+    foreach($biglietti as $t){
+        //se un biglietto non è scaduto, lo aggiungo all'array di biglietti attivi
+        //controllo temporale: se la data di validità del biglietto è maggiore di "adesso", allora è attivo
+        if(strtotime($t['data_orario']) >= time()){
+            $biglietti_attivi[] = $t;      
+        }else{
+            //altrimenti lo aggiungo all'array di biglietti scaduti
+            $biglietti_scaduti[] = $t;
+        }
+    }
+
 
 ?>
 
@@ -114,9 +141,9 @@
                 <div class="subs-sec">
                     <h2> I tuoi Abbonamenti</h2>
                     <?php if(count($abbonamenti) > 0): ?>
-                        <?php foreach ($abbonamenti as $sub): 
+                        <?php foreach ($abbonamenti_attivi as $sub): 
                             //controllo temportale: se la data di fine è maggiore di "adesso" è attivo
-                            $is_sub_active = strtotime($sub['data_fine']) > time();
+                            //$is_sub_active = strtotime($sub['data_fine']) > time();
                         ?>
                             <div class="sub-card">
                                 <span class = "sub_name"><?php echo htmlspecialchars($sub['nome']); ?></span>
@@ -125,28 +152,50 @@
                                     Scadenza: <strong><?php echo date('d/m/Y', strtotime($sub['data_fine'])); ?> </strong>
                                 </div>
 
-                                <div class="sub-status">
-                                    <?php if($is_sub_active): ?>
+                            <div class="sub-status">
+                                <span class="status-badge status-active">Attivo</span>
+                                <?php   /* <?php if($is_sub_active): ?>
                                         <span class="status-badge status-active">Attivo</span>
                                     <?php else: ?>
                                         <span class = "status-badge status-expired">Scaduto</span>
-                                    <?php endif; ?>         
-                                </div>
+                                    <?php endif; ?>   
+                                 */ ?>   
+                             </div>
                             </div>
                         <?php endforeach; ?>
                     <?php else: ?>
                         <p class="no-subs">Non hai abbonamenti attivi al momento.</p>
-                    <?php endif; ?>        
-                </div>
+                    <?php endif; ?> 
+                    
+                    <?php if(count($abbonamenti_scaduti) > 0): ?>
+                        <button class="toggle-history" onclick="toggleVisibility('history-subs', event)">▼ Mostra Storico Abbonamenti</button>
+                        <div id="history-subs" class="history-content">
+                            <?php foreach($abbonamenti_scaduti as $sub): ?>
+                                <div class="sub-card history-card">
+                                    <span class="sub_name"><?php echo htmlspecialchars($sub['nome']); ?></span>
+                                    <div class="sub_dates">
+                                        Terminato il: <?php echo date('d/m/Y', strtotime($sub['data_fine'])); ?>
+
+                                    </div>
+
+                                    <div class="sub-status">
+                                        <span class="status-badge status-expired">Scaduto</span>
+                                    </div>
+                    
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
+                </div>    
                  
                 <!-- visualizzo i biglietti attivi per un dato utente !-->
                 <div class="tickets-sec">
                     <h2>I tuoi Biglietti</h2>
                     <?php if(count($biglietti) > 0): ?>
-                        <?php foreach($biglietti as $t):
+                        <?php foreach($biglietti_attivi as $t):
                             //si verifica se il film è ancora da proiettare: si confronta la data del film (trasformata in un TimeStamp
                             // Unix, un numero che rappresenta i secondi trascorsi dal 1 gennaio 1970) con il momento esatto attuale (utilizzando time())
-                            $is_ticket_active = strtotime($t['data_orario']) > time();
+                            //$is_ticket_active = strtotime($t['data_orario']) > time();
                         ?>
 
                             <div class = "ticket-card">
@@ -161,18 +210,39 @@
                                 </div>
 
                             <div class="ticket-status">
-                                <?php if($is_ticket_active): ?>
+                                <span class = "status-badge status-active">Valido</span>
+                               <?php /*<?php if($is_ticket_active): ?>
                                     <span class = "status-badge status-active">Valido</span>
                                 <?php else: ?>
                                     <span class="status-badge status-expired">Scaduto</span>    
                                 <?php endif; ?>
+                                */ ?>
                             </div>   
                         </div>
                         <?php endforeach; ?>
                     <?php else: ?>
                         <p class="no-subs">Non hai biglietti per i prossimi film.</p>
                     <?php endif; ?>
-                </div>
+
+                    <?php if(count($biglietti_scaduti) > 0): ?>
+                        <button class="toggle-history" onclick="toggleVisibility('history-tickets', event)">▼ Mostra Storico Biglietti</button>
+                        <div id="history-tickets" class="history-content">
+                            <?php foreach($biglietti_scaduti as $t): ?>
+                                <div class="ticket-card history-card">
+                                    <div class = "ticket-info">
+                                        <h4><?php echo htmlspecialchars($t['titolo']); ?></h4>
+                                        <div class="ticket-details">
+                                            Visto il: <?php echo date("d/m/Y", strtotime($t['data_orario'])); ?>
+                                        </div>
+                                    </div>
+                                    <div class="ticket-status">
+                                        <span class = "status-badge status-expired">Scaduto</span>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
+                </div>    
                 <a href="index.php">&larr; Torna alla Home</a>
             </div>
         </div>

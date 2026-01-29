@@ -167,10 +167,49 @@ p{
 
 }
 
+/*Pulsante per mostrare lo storico*/
+.toggle-history{
+    background: transparent;
+    border: 1px solid #ff9d00;
+    color: #888;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 15px;
+    font-weight: bold;
+
+}
+
+/*PSEUDO-CLASSE*/
+.toggle-history:hover{
+    border-color: #ff9d00;
+    color: #ff9d00;
+}
+
+.history-card{
+    opacity: 0.6;       /*l'elemento diventa leggermente semitrasparente*/
+    filter: grayscale(1);   /*trasforma l'elemento in scala di grigi*/
+    border-left: 4px solid #555 !important;
+}
+
+/*Contenitore che mostra lo storico - inizialmente nascosto*/
+.history-content{
+    display: none;
+    margin: 15px;
+    opacity: 0.8;   /*Leggera trasparenza per i dati vecchi*/
+}
+
+/*Classe di supporto per mostrare un elemento dinamicamente*/
+.show{
+    display: block !important;
+}
 
 a{
     color: #ff9d00;
+    display: inline-block;
     margin-top: 25px;
+    padding: 10px;
     font-weight: bold;
     text-decoration: none;
     font-size: 15px;

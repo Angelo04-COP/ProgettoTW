@@ -68,6 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_piano'])) {
     <title>Abbonamenti MyCinema</title>
     <link rel="stylesheet" type="text/css" href="style_abbonamenti.css" />
 </head>
+
 <body>
     <div class="header-nav">
         <a href="index.php" class="btn-nav">🏠 Home</a>

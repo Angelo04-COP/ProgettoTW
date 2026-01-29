@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_prod'])) {
 <head>
     <meta charset="UTF-8">
     <title>MyCinema - Bar & Snack</title>
-    <link rel="stylesheet" type="text/css" href="style_bar.css" />
+    <link rel="stylesheet" type="text/css" href="style_bar.css?ver=1.2" />
 </head>
 <body>
 
@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_prod'])) {
             <li><a href="bar.php" style="border-bottom: 2px solid #ff9d00;">Bar</a></li>
             <?php if(isset($_SESSION['username'])): ?>
                 <li style="color:white; padding:20px;">Ciao, <strong><?php echo $_SESSION['username']; ?></strong></li>
-                <li><a href="logout.php" style="color: #ff4444;">Logout</a></li>
+                <li><a href="logout.php" style="color: #991f1fff;">Logout</a></li>
             <?php else: ?>
                 <li><a href="login.php">Accedi</a></li>
             <?php endif; ?>

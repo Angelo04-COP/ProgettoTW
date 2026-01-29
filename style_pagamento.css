@@ -10,7 +10,7 @@
         }
 
         h1 {
-            color: white;
+            color: rgb(215, 214, 214);
         }
 
 /* SELETTORI DI CLASSE */
@@ -22,8 +22,8 @@
             padding: 40px; 
             border-radius: 10px; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
-            border: 1px solid #d77c37ff; 
-            border-top: 10px solid #d77c37ff; 
+            border: 1px solid rgb(226, 149, 41);; 
+            border-top: 10px solid rgb(226, 149, 41);; 
         }
 
         .form-pagamento { 
@@ -38,13 +38,12 @@
         }
 
         .btn-paga { 
-            background-color: #c1782fff; 
-            color: white; 
+            background-color: rgb(226, 149, 41);
+            color: blackwhiblackte; 
             border: none; 
             padding: 15px; 
             border-radius: 8px; 
             font-size: 16px; 
-            font-weight: 600; 
             cursor: pointer; 
             width: 100%; 
             transition: 0.3s; 
@@ -56,7 +55,7 @@
  /* PSEUDO-CLASSE (stato dell'elemento, es. :hover, :disabled) */
 
         .campo input:focus { 
-            border-color: #cc6322ff; 
+            border-color: rgb(226, 149, 41);
             box-shadow: 0 0 5px rgba(229, 9, 20, 0.2); 
         }
     
@@ -79,7 +78,7 @@
             font-size: 14px; 
             color: #d5d2d2ff; 
             margin-bottom: 5px; 
-            font-weight: 600; 
+            font-weight: 500; 
         }
 
         .campo input { 
@@ -89,5 +88,5 @@
             font-size: 16px; 
             outline: none; 
             transition: 0.3s; 
-            background: #c6b199ff;
+            background: rgb(174, 161, 148);
         }

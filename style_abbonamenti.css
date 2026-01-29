@@ -12,7 +12,7 @@
 /* SELETTORE ID (univoco per elemento) */
 
         #main-title {
-            color: #d77c37ff;
+           color: rgb(226, 149, 41); 
         }
 
 /* SELETTORI DI CLASSE */
@@ -36,13 +36,13 @@
 
         .card { 
             background: #000000ff; 
+            box-shadow: 0 0 10px 5px rgba(83, 115, 155, 0.5);
             border-radius: 4px; 
-            padding: 25px; 
+            padding: 30px; 
             text-align: center; 
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
             transition: all 0.3s ease; 
-            border: 1px solid #d77c37ff; 
-            border-top: 8px solid #ca7534ff; 
+            border: 1px solid rgb(100, 100, 99); 
+            border-top: 8px solid rgb(77, 76, 76); 
             display: flex; 
             flex-direction: column; 
             justify-content: space-between; 
@@ -58,15 +58,10 @@
             margin-bottom: 10px; 
         }
 
-        h1 {
-            color: #d77c37ff;
-        }
-
-
         .price { 
             font-size: 24px; 
             font-weight: bold; 
-            color: #bf7238ff; 
+            color: rgb(232, 228, 226); 
             margin: 15px 0; 
             margin-bottom: 20px;
         }
@@ -79,8 +74,8 @@
         }
 
         .btn { 
-            background: #c9702cff;
-            color: white; 
+            background: rgb(226, 149, 41);
+            color: black;
             border: none; 
             padding: 12px; 
             border-radius: 15px; 
@@ -103,7 +98,7 @@
         
         .card h3 { 
             margin: 10px 0; 
-            color: #aca8a8ff; 
+            color: rgb(226, 149, 41); 
             font-size: 23px; 
             font-family: sans-serif;
             font-weight: 600;
@@ -112,10 +107,10 @@
         /* SELETTORE COMPOSTO */
 
         .card.premium { 
-            border-top: 5px solid #ca7534ff; 
-            border-left: 1px solid #ca7534ff; 
-            border-right: 1px solid #ca7534ff; 
-            border-bottom: 1px solid #ca7534ff; 
+            border-top: 10px solid #434242; 
+            border-left: 1px solid #434242; 
+            border-right: 1px solid #434242; 
+            border-bottom: 1px solid #434242; 
         }
 
         /* PSEUDO-CLASSI (stato dell'elemento, es. :hover, :disabled) */
@@ -132,7 +127,7 @@
         }
 
         .btn:disabled {
-            background: #b6a79bff;
+            background: rgb(132, 130, 129);
             cursor: not-allowed;
             transform: none;
         }

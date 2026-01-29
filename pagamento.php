@@ -68,11 +68,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>Pagamento Sicuro - MyCinema</title>
-    <link rel="stylesheet" href="style_pagamento.css?v=1.1">
+    <link rel="stylesheet" href="style_pagamento.css?v=1.3">
 
 </head>
 <body>
     <div class="container-carrello">
+        <a href="index.php" style="color: white">🏠 Home</a>
         <header style="text-align: center; margin-bottom: 30px;">
             <h1>Pagamento 💳</h1>
             <p style="color: #a8a8a8ff;">Inserisci i dati della tua carta</p>

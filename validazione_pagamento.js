@@ -32,6 +32,18 @@ function validaPagamento(f) {
         return false;
     }
 
+    // Data attuale
+    var oggi = new Date();
+    var meseAttuale = oggi.getMonth() + 1; // getMonth() va da 0 a 11
+    var annoAttuale = oggi.getFullYear() % 100; // ultime due cifre
+
+    // Controllo scadenza
+    if (anno < annoAttuale || (anno === annoAttuale && mese < meseAttuale) ) {
+        alert("⚠️ Carta scaduta.");
+        f.scadenza.focus();
+        return false;
+    }
+
     // Controllo CVV
     if (f.cvv.value.length !== 3 || isNaN(f.cvv.value)) {
         alert("⚠️ Il codice CVV deve essere di 3 cifre.");

@@ -114,6 +114,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </form>
         <p style="text-align: center; margin-top: 20px; font-size: 12px; color: #a7a7a7ff;">🔒 Pagamento criptato e sicuro</p>
     </div>
-    <script src="validazione_pagamento.js"></script>
+    <script src="validazione_pagamento.js?v=1.2"></script>
 </body>
 </html>

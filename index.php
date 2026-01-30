@@ -60,7 +60,7 @@
                     <form method="GET" action="index.php" style="margin:0;">
                         <lable style="color: #ccc; margin-right: 10px;">Seleziona Data:</lable>
                         <!-- ricarica la pagina index.php passando la data selezionata come parametro GET 'data_selezionata' -->
-                        <input type="date" name="data_selezionata" value="<?php echo $data_oggi; ?>" onchange="this.form.submit()" />
+                        <input type="date" name="data_selezionata" value="<?php echo $data_oggi; ?>" min="<?php echo date('Y-m-d'); ?> " onchange="this.form.submit()" />
                     </form> 
                 </div> 
 

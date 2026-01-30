@@ -121,8 +121,8 @@
         <title>MyCinema : IL MIO PROFILO</title>
        <meta charset = "utf-8" />
        
-       <script type="text/javascript" src="script_profilo.js" defer></script>
-       <link rel="stylesheet" type="text/css" href="style_profilo.css" />
+       <script type="text/javascript" src="js/script_profilo.js" defer></script>
+       <link rel="stylesheet" type="text/css" href="css/style_profilo.css" />
     </head>
 
     <body>

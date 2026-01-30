@@ -80,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>Pagamento Sicuro - MyCinema</title>
-    <link rel="stylesheet" href="style_pagamento.css?v=1.3">
+    <link rel="stylesheet" href="css/style_pagamento.css?v=1.3">
 
 </head>
 <body>
@@ -126,6 +126,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </form>
         <p style="text-align: center; margin-top: 20px; font-size: 12px; color: #a7a7a7ff;">🔒 Pagamento criptato e sicuro</p>
     </div>
-    <script src="validazione_pagamento.js?v=1.2"></script>
+    <script src="js/validazione_pagamento.js?v=1.2"></script>
 </body>
 </html>

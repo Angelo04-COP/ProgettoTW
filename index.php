@@ -98,7 +98,7 @@
                 ?>
 
                 <!--Sezione per visualizzare le informazioni dei film-->
-                <div class="film_container" style="margin-bottom: 40px; padding-bottom: 20px;">
+                <div class="film_container">
                     <div class="info-film">
 
                         <!-- Mostro la locandina del film -->

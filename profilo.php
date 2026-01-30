@@ -141,10 +141,7 @@
                 <div class="subs-sec">
                     <h2> I tuoi Abbonamenti</h2>
                     <?php if(count($abbonamenti) > 0): ?>
-                        <?php foreach ($abbonamenti_attivi as $sub): 
-                            //controllo temportale: se la data di fine è maggiore di "adesso" è attivo
-                            //$is_sub_active = strtotime($sub['data_fine']) > time();
-                        ?>
+                        <?php foreach ($abbonamenti_attivi as $sub): ?>
                             <div class="sub-card">
                                 <span class = "sub_name"><?php echo htmlspecialchars($sub['nome']); ?></span>
                                 <div class="sub_dates">
@@ -154,12 +151,6 @@
 
                             <div class="sub-status">
                                 <span class="status-badge status-active">Attivo</span>
-                                <?php   /* <?php if($is_sub_active): ?>
-                                        <span class="status-badge status-active">Attivo</span>
-                                    <?php else: ?>
-                                        <span class = "status-badge status-expired">Scaduto</span>
-                                    <?php endif; ?>   
-                                 */ ?>   
                              </div>
                             </div>
                         <?php endforeach; ?>
@@ -192,12 +183,7 @@
                 <div class="tickets-sec">
                     <h2>I tuoi Biglietti</h2>
                     <?php if(count($biglietti) > 0): ?>
-                        <?php foreach($biglietti_attivi as $t):
-                            //si verifica se il film è ancora da proiettare: si confronta la data del film (trasformata in un TimeStamp
-                            // Unix, un numero che rappresenta i secondi trascorsi dal 1 gennaio 1970) con il momento esatto attuale (utilizzando time())
-                            //$is_ticket_active = strtotime($t['data_orario']) > time();
-                        ?>
-
+                        <?php foreach($biglietti_attivi as $t):?>
                             <div class = "ticket-card">
                                 <div class = "ticket-info">
                                     <h4><?php echo htmlspecialchars($t['titolo']); ?></h4>
@@ -211,12 +197,6 @@
 
                             <div class="ticket-status">
                                 <span class = "status-badge status-active">Valido</span>
-                               <?php /*<?php if($is_ticket_active): ?>
-                                    <span class = "status-badge status-active">Valido</span>
-                                <?php else: ?>
-                                    <span class="status-badge status-expired">Scaduto</span>    
-                                <?php endif; ?>
-                                */ ?>
                             </div>   
                         </div>
                         <?php endforeach; ?>

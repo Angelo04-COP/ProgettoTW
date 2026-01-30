@@ -21,6 +21,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     pg_query($connect, "BEGIN");
     $check_insert = true;
 
+    //variabile flag per tracciare se ci sono oggetti da mostrare nel profilo
+    $flag = false;
+
     foreach ($_SESSION['carrello'] as $item) {
         if (isset($item['tipo_item']) && $item['tipo_item'] == 'bar') {
             // Inserimento per i prodotti del BAR
@@ -34,6 +37,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             //$item['id'] in questo caso si riferisce all'id della prenotazione biglietto
             $query = "INSERT INTO prenotazioni (proiezione_id, utente_id, fila, numero) VALUES ($1, $2, $3, $4)"; 
             $res = pg_query_params($connect, $query, array($item['id'], $id_utente, $item['fila'], $item['numero']));
+            //se si acquista un biglietto, allora si deve andare al profilo
+            $flag = true;
         }
         
         else {
@@ -43,6 +48,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $query = "INSERT INTO abbonamenti (id_utente, id_piano, data_inizio, data_fine, stato) 
                       VALUES ($1, $2, CURRENT_DATE, CURRENT_DATE + INTERVAL '$durata', 'attivo')";
             $res = pg_query_params($connect, $query, array($id_utente, $item['id']));
+            //se si acquista un abbonamento, allora si deve andare al profilo
+            $flag = true;
         }
         
         if (!$res) {
@@ -54,7 +61,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($check_insert) {
         pg_query($connect, "COMMIT");
         unset($_SESSION['carrello']);
-        header("Location: profilo.php"); 
+        //controllo condizionale per il reindirizzamento
+        if($flag){
+            header("Location: profilo.php"); 
+        }else{
+            header("Location: index.php");
+        }
         exit();
     } else {
         pg_query($connect, "ROLLBACK");

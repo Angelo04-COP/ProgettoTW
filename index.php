@@ -1,20 +1,30 @@
 <?php session_start();
     include'db.php';    //connesione al database ($connect);
 
+    $min_data = date('Y-m-d');  //data minima selezionabile (data odierna)
+
     //Gestione data dinamica
     if(isset($_GET['data_selezionata'])){
         $data_oggi = $_GET['data_selezionata'];             //recupero la data selezionata dall'utente tramite parametro GET
+        if($data_oggi < $min_data){
+            $data_oggi = $min_data;                         //impongo che la data selezionata non sia antecedente alla data odierna
+        }
+
         $_SESSION['data_film_memorizzata'] = $data_oggi;    //memorizzo la data selezionata in una variabile di sessione
     } 
     
     //se non è stata selezionata nessuna data ma esiste una data memorizzata nella sessione, la uso (utile per navigare tra le pagine senza perdere la data selezionata)
     elseif(isset($_SESSION['data_film_memorizzata'])){
-        $data_oggi = $_SESSION['data_film_memorizzata'];    
+        $data_oggi = $_SESSION['data_film_memorizzata'];   
+        if($data_oggi < $min_data){
+            $data_oggi = $min_data;                         //impongo che la data selezionata non sia antecedente alla data odierna
+            $_SESSION['data_film_memorizzata'] = $data_oggi; //aggiorno la data memorizzata nella sessione
+        } 
     }
 
     //comportamento di default (per il primo accesso alla pagina)
     else {
-        $data_oggi = date('Y-m-d');  //data del giorno corrente di default
+        $data_oggi = $min_data;  //data del giorno corrente di default
     }
 ?>
 <html lang="it">

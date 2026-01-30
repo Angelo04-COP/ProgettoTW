@@ -5,7 +5,7 @@
     if(isset($_GET['data_selezionata'])){
         $data_oggi = $_GET['data_selezionata'];
     } else {
-        $data_oggi = '2026-01-26';  //data fissa per test (26 gennaio 2026)
+        $data_oggi = date('Y-m-d');  //data del giorno corrente di default
     }
 ?>
 <html lang="it">

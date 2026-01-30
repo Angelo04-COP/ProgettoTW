@@ -14,7 +14,7 @@
         <meta charset="utf-8" />
 
         <script type="text/javascript" src="script_index.js" defer ></script>
-        <link rel="stylesheet" type="text/css" href="style_index.css" />
+        <link rel="stylesheet" type="text/css" href="style_index.css?v=1.2" />
 
     </head>
  
@@ -136,7 +136,21 @@
 
         <!-- Footer -->
         <footer>
-            <p> &copy; 2026 MyCinema</p>            
+        <div class="footer-left">
+            <a href="mailto:info@mycinema.it" class="email-link">
+                ✉️ Scrivici un'email
+            </a>
+        </div>
+
+        <div class="footer-center">
+            <p>© 2026 MyCinema</p>
+        </div>
+
+        <div class="footer-right">
+            <a href="https://maps.app.goo.gl/V7GTsDe5EcUtwLak9" target="_blank" class="map-link">
+                📍 Dove siamo
+            </a>
+        </div>
         </footer>
 
     </body>

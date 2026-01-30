@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_prod'])) {
             <li><a href="abbonamenti.php">Abbonamenti</a></li>
             <li><a href="bar.php" style="border-bottom: 2px solid #ff9d00;">Bar</a></li>
             <?php if(isset($_SESSION['username'])): ?>
-                <li style="color:white; padding:20px;">Ciao, <strong><?php echo $_SESSION['username']; ?></strong></li>
+                <li style="color:black; padding:20px;">Benvenuto, <strong><?php echo $_SESSION['username']; ?></strong></li>
                 <li><a href="logout.php" style="color: #991f1fff;">Logout</a></li>
             <?php else: ?>
                 <li><a href="login.php">Accedi</a></li>

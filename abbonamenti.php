@@ -66,27 +66,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_piano'])) {
 <head>
     <meta charset="UTF-8">
     <title>Abbonamenti MyCinema</title>
-    <link rel="stylesheet" type="text/css" href="css/style_abbonamenti.css?v=1.6" />
+    <link rel="stylesheet" type="text/css" href="css/style_abbonamenti.css" />
 </head>
 
 <body>
-    <header>
-    <nav>
-        <ul class="horizontal-nav">
-            <li><a href="index.php">Home</a></li>
-            <li><a href="abbonamenti.php" style="border-bottom: 2px solid #ff9d00;">Abbonamenti</a></li>
-            <li><a href="bar.php">Bar</a></li>
-            <?php if(isset($_SESSION['username'])): ?>
-                <li style="color:black; padding:20px; margin-left:50px">Benvenuto, <strong><?php echo $_SESSION['username']; ?></strong></li>
-                <li><a href="profilo.php">Profilo</a></li>
-                <li><a href="logout.php" style="color: #991f1fff;">Logout</a></li>
-            <?php else: ?>
-                <li><a href="login.php">Accedi</a></li>
-            <?php endif; ?>
-        </ul>
-    </nav>
-    </header>
     <div class="header-nav">
+        <a href="index.php" class="btn-nav">🏠 Home</a>
         <h1 id="main-title">ABBONAMENTI MyCINEMA</h1>
         <a href="carrello.php" class="btn-nav">🛒 Carrello (<?php echo isset($_SESSION['carrello']) ? count($_SESSION['carrello']) : 0; ?>)</a>
     </div>
@@ -123,11 +108,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_piano'])) {
        </div>
     <?php endforeach; ?>
     </div>
-
-   <footer>
-    <p>&copy; 2026 MyCinema</p>
-    </footer>   
 </body>
-
-
 </html>

@@ -22,7 +22,7 @@
                 $pass = $_POST['password'];
               
 
-              //utilizzo la funzione get_pwd che controlla se la password dell'utente $user è presente nel database
+              //utilizzo la funzione get_user_data che controlla se l'utente $user è presente nel database
               $user_data = get_user_data($user, $connect); 
 
               if(!$user_data){
@@ -53,7 +53,7 @@
     
                     if ($res_check) {
                     $piani_gia_attivi = pg_fetch_all_columns($res_check) ?: [];
-
+                        
                         // Se c'è qualcosa nel carrello (messo da anonimo), filtro
                         if (isset($_SESSION['carrello']) && !empty($_SESSION['carrello'])) {
                             foreach ($_SESSION['carrello'] as $key => $item) {

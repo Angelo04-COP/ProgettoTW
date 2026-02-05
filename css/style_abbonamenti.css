@@ -1,6 +1,6 @@
 /* abbonamenti.css */
 
-/* SELETTORE DI TIPO (body, h1, p)*/
+/* SELETTORE DI TIPO (ody, h1, p)*/
 
         body { 
             font-family: sans-serif; 
@@ -8,75 +8,29 @@
             margin: 0; 
             padding: 40px; 
         }
-        body {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            min-height: 100%;
-            background-color: black;
-            font-family: sans-serif;
-            overflow-x: hidden; 
-}
-
-        header { 
-            background-color: black; 
-            padding: 0; 
-            width: 100%; 
-        }
-
-        .horizontal-nav {
-            list-style-type: none;
-            background:   #b9713aff; /* Gradiente nav */
-            display: flex;
-            justify-content: center;
-            width: 100%;
-            margin: 0;
-            padding: 0; 
-        }
-
-        .horizontal-nav li a {
-            display: block;
-            color: #000000ff;
-            padding: 20px;
-            text-decoration: none;
-        }
-
-        footer {
-            color: white;
-            background-color: #000;
-            text-align: center;
-            margin-top: 50px;
-            padding: 20px;
-            border-top: 1px solid #333;
-        }
    
 /* SELETTORE ID (univoco per elemento) */
 
         #main-title {
            color: rgb(226, 149, 41); 
-           margin-top: 10px;
-           text-align: center;
-           flex-grow: 1;
         }
 
 /* SELETTORI DI CLASSE */
 
         .header-nav { 
             display: flex; 
-            flex-direction: column;
+            justify-content: space-between; 
             align-items: center; 
-            width: 100%;
             max-width: 1200px; 
-            margin: 20px auto 40px; 
-            gap: 10px;
+            margin: 0 auto 40px; 
+            gap: 20px;
         }
 
         .container { 
             display: grid; 
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
             gap: 25px; 
-            width: 95%;
-            max-width: 1250px; 
+            max-width: 1200px; 
             margin: 0 auto; 
         }
 
@@ -137,9 +91,7 @@
             background: #333; 
             color: white; 
             padding: 10px 20px; 
-            border: 1px solid rgb(226, 149, 41);
             border-radius: 8px; 
-            right: 0;
         }
 
         /*SELETTORE DISCENDENTE */
@@ -180,7 +132,4 @@
             transform: none;
         }
 
-        .horizontal-nav li:hover { 
-            background-color: #b58465; 
-        }
   

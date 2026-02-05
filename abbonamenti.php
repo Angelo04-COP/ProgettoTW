@@ -70,6 +70,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_piano'])) {
 </head>
 
 <body>
+    <header>
+    <nav>
+        <ul class="horizontal-nav">
+            <li><a href="index.php">Home</a></li>
+            <li><a href="abbonamenti.php" style="border-bottom: 2px solid #ff9d00;">Abbonamenti</a></li>
+            <li><a href="bar.php">Bar</a></li>
+            <?php if(isset($_SESSION['username'])): ?>
+                <li style="color:black; padding:20px; margin-left:50px">Benvenuto, <strong><?php echo $_SESSION['username']; ?></strong></li>
+                <li><a href="profilo.php">Profilo</a></li>
+                <li><a href="logout.php" style="color: #991f1fff;">Logout</a></li>
+            <?php else: ?>
+                <li><a href="login.php">Accedi</a></li>
+                <li><a href="registrazione.php">Registrati</a></li>
+            <?php endif; ?>
+        </ul>
+    </nav>
+    </header>
     <div class="header-nav">
         <a href="index.php" class="btn-nav">🏠 Home</a>
         <h1 id="main-title">ABBONAMENTI MyCINEMA</h1>

@@ -82,6 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_piano'])) {
                 <li><a href="logout.php" style="color: #991f1fff;">Logout</a></li>
             <?php else: ?>
                 <li><a href="login.php">Accedi</a></li>
+                <li><a href="registrazione.php">Registrati</a></li>
             <?php endif; ?>
         </ul>
     </nav>

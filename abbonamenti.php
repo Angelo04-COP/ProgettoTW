@@ -124,11 +124,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_piano'])) {
        </div>
     <?php endforeach; ?>
     </div>
-
-   <footer>
-    <p>&copy; 2026 MyCinema</p>
-    </footer>   
 </body>
-
-
 </html>

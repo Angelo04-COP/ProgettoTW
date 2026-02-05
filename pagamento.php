@@ -97,22 +97,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <form method="POST" name="formPagamento" class="form-pagamento" onsubmit="return validaPagamento(this);">
             <div class="campo">
                 <label>Titolare della carta</label>
-                <input type="text" name="titolare" placeholder="Mario Rossi" value="<?php echo htmlspecialchars($_POST['titolare'] ?? ''); ?>">
+                <input type="text" name="titolare" placeholder="Mario Rossi">
             </div>
             
             <div class="campo">
                 <label>Numero Carta</label>
-                <input type="text" name="numero_carta" placeholder="1234567812345678" maxlength="16" value="<?php echo htmlspecialchars($_POST['numero_carta'] ?? ''); ?>">
+                <input type="text" name="numero_carta" placeholder="1234567812345678" maxlength="16">
             </div>
 
             <div style="display: flex; gap: 20px;">
                 <div class="campo" style="flex: 2;">
                     <label>Scadenza</label>
-                    <input type="text" name="scadenza" placeholder="MM/AA" maxlength="5" value="<?php echo htmlspecialchars($_POST['scadenza'] ?? ''); ?>">
+                    <input type="text" name="scadenza" placeholder="MM/AA" maxlength="5">
                 </div>
                 <div class="campo" style="flex: 1;">
                     <label>CVV</label>
-                    <input type="text" name="cvv" placeholder="123" maxlength="3" value="<?php echo htmlspecialchars($_POST['cvv'] ?? ''); ?>">
+                    <input type="text" name="cvv" placeholder="123" maxlength="3">
                 </div>
             </div>
 

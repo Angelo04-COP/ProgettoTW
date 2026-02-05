@@ -53,6 +53,7 @@
 
         .header-nav { 
             display: flex; 
+            flex-direction: column;
             justify-content: space-between; 
             align-items: center; 
             max-width: 1200px; 
@@ -126,6 +127,7 @@
             color: white; 
             padding: 10px 20px; 
             border-radius: 8px; 
+            border: 1px solid #ff9d00;
         }
 
         /*SELETTORE DISCENDENTE */

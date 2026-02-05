@@ -7,8 +7,8 @@
         <title>MyCinema : ACCEDI</title>
         <meta charset="utf-8">
 
-        <script type="text/javascript" src="validazione_login.js" defer></script>
-        <link rel="stylesheet" type="text/css" href="style_login.css" />
+        <script type="text/javascript" src="js/validazione_login.js" defer></script>
+        <link rel="stylesheet" type="text/css" href="css/style_login.css?v=1.2" />
 
 
 

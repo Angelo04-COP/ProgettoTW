@@ -124,7 +124,7 @@
 <head>
     <title>Prenota - <?php echo $info['titolo']; ?></title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="style_prenotazione.css">
+    <link rel="stylesheet" href="css/style_prenotazione.css">
 </head>
 
 <!-- Inizio del corpo della pagina -->
@@ -240,7 +240,7 @@
         let postiSelezionati = <?php echo json_encode($posti_nel_carrello); ?>;     //trasforma l'array PHP in array JS
     </script>
         
-    <script src="script_prenotazione.js"></script>
+    <script src="js/script_prenotazione.js"></script>
     
     <script>
         aggiornaTotali();  //chiamo la funzione all'inizio per calcolare subito il totale di eventuali posti già selezionati nel carrello

@@ -32,8 +32,8 @@
         <title>MyCinema</title>
         <meta charset="utf-8" />
 
-        <script type="text/javascript" src="script_index.js" defer ></script>
-        <link rel="stylesheet" type="text/css" href="style_index.css?v=1.2" />
+        <script type="text/javascript" src="js/script_index.js" defer ></script>
+        <link rel="stylesheet" type="text/css" href="css/style_index.css?v=1.2" />
 
     </head>
  
@@ -98,7 +98,7 @@
                 ?>
 
                 <!--Sezione per visualizzare le informazioni dei film-->
-                <div class="film_container" style="margin-bottom: 40px; border-bottom: 1px solid #333; padding-bottom: 20px;">
+                <div class="film_container">
                     <div class="info-film">
 
                         <!-- Mostro la locandina del film -->

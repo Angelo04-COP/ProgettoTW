@@ -4,8 +4,8 @@
         <title>MyCinema: REGISTRATI</title>
         <meta charset="utf-8" />
 
-        <script type="text/javascript" src="validazione_registrazione.js" defer></script>
-        <link rel="stylesheet" type="text/css" href="style_registrazione.css" />
+        <script type="text/javascript" src="js/validazione_registrazione.js" defer></script>
+        <link rel="stylesheet" type="text/css" href="css/style_registrazione.css" />
 
 
     </head>

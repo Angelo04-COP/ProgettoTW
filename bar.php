@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_prod'])) {
 <head>
     <meta charset="UTF-8">
     <title>MyCinema - Bar & Snack</title>
-    <link rel="stylesheet" type="text/css" href="style_bar.css?ver=1.2" />
+    <link rel="stylesheet" type="text/css" href="css/style_bar.css?ver=1.2" />
 </head>
 <body>
 
